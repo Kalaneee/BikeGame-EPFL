@@ -41,7 +41,7 @@ public class Tremplin extends GameEntity implements Actor {
 			public void beginContact(Contact contact) {
 				Part other = contact.getOther();
 				float velocity = other.getEntity().getAngularVelocity();
-				applyForce(other, velocity);
+				applyForce(other, velocity*2);
 			}
 
 			@Override
