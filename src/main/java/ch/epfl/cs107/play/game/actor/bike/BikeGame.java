@@ -31,20 +31,6 @@ public class BikeGame extends ActorGame{
 	private boolean fixed = false;
 	
 	private Terrain terrain;
-//	private Polyline formeTerrain = new Polyline (
-//			-1000.0f, -1000.0f,
-//			-1000.0f, 0.0f,
-//			0.0f, 0.0f,
-//			3.0f, 1.0f,
-//			8.0f, 1.0f,
-//			15.0f, 3.0f,
-//			16.0f, 3.0f,
-//			25.0f, 0.0f,
-//			35.0f, -5.0f,
-//			50.0f, -5.0f,
-//			55.0f, -4.0f,
-//			65.0f, 0.0f,
-//			6500.0f, -1000.0f);
 	private Polyline formeTerrain = new Polyline (
 			-10.0f, -1000.0f,
 			-10.0f, 20.0f,
@@ -75,6 +61,21 @@ public class BikeGame extends ActorGame{
 			190.0f, 0.0f,
 			200.0f, 0.0f,
 			200.0f, -1000.0f);
+	private Vector[] bushPos = {
+			new Vector(-5.0f, 0.0f),
+			new Vector(-15.0f, 7.0f),
+			new Vector(-22.0f, 7.0f),
+			new Vector(-38.0f, 0.0f),
+			new Vector(-43.0f, 0.0f),
+			new Vector(-63.0f, 0.0f),
+			new Vector(-77.0f, 0.0f),
+			new Vector(-118.0f, 20.0f),
+			new Vector(-150.0f, 20.0f),
+			new Vector(-152.0f, 20.0f),
+			new Vector(-159.0f, 20.0f),
+			new Vector(-177.0f, 20.0f),
+			new Vector(-185.0f, 20.0f),
+			};
 	
 	private Crate c1;
 	private Crate c2;
@@ -139,7 +140,7 @@ public class BikeGame extends ActorGame{
 		msgCrash = new TextGraphics("", 0.1f, Color.BLACK);
 		msgCrash.draw(window);
 
-		terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, new Color(139, 69, 19), new Color(0,128,0), 0.15f);
+		terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, new Color(139, 69, 19), new Color(0,128,0), 0.15f, bushPos);
 		
 		c1 = new Crate(this, fixed, posCrate1, 1, 1, "stone.broken.4.png");
 		c2 = new Crate(this, fixed, posCrate2, 1, 1, "stone.broken.1.png");

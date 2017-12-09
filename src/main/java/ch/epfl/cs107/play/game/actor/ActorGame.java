@@ -143,7 +143,6 @@ public abstract class ActorGame implements Game {
 					if ((a instanceof Bike)) {
 						((Bike) a).setPosition(getMouse().getPosition());
 					}
-
 				}
 			}
 
@@ -179,7 +178,7 @@ public abstract class ActorGame implements Game {
 				if (points.size() != 0) {
 					points.add(points.get(0));
 					formeTerrain = new Polyline(points);
-					Terrain terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK, 0.1f);
+					Terrain terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK, 0.1f, null);
 				}
 			}
 			if (isDrawing) {
