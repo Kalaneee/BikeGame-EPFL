@@ -4,8 +4,6 @@
  */
 package ch.epfl.cs107.play.game.actor.general;
 
-import javax.print.attribute.standard.MediaSize.Other;
-
 import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.ActorGame;
 import ch.epfl.cs107.play.game.actor.GameEntity;
@@ -22,6 +20,9 @@ import ch.epfl.cs107.play.window.Canvas;
 public class Tremplin extends GameEntity implements Actor {
 	private ContactListener listener;
 	private ImageGraphics graphic;
+	private ImageGraphics graphicExt;
+	private float animTimer = 0;
+	private boolean hit;
 
 	public Tremplin(ActorGame game, boolean fixed, Vector position, float width, float height, String image) {
 		super(game, fixed, position);
@@ -40,8 +41,11 @@ public class Tremplin extends GameEntity implements Actor {
 			@Override
 			public void beginContact(Contact contact) {
 				Part other = contact.getOther();
+				hit = true;
 				float velocity = other.getEntity().getAngularVelocity();
 				applyForce(other, velocity);
+				graphicExt = new ImageGraphics("jumper.extended.png", width, height * 2f);
+				graphicExt.setParent(getEntity());
 			}
 
 			@Override
@@ -63,12 +67,24 @@ public class Tremplin extends GameEntity implements Actor {
 
 	@Override
 	public void draw(Canvas canvas) {
-		graphic.draw(canvas);
+		if (hit && animTimer <= 100) {
+			graphicExt.draw(canvas);
+			animTimer++;
+			if (animTimer == 100) {
+				animTimer = 0;
+				hit = false;
+			}
+		} else {
+			graphic.draw(canvas);
+		}
 	}
 
 	public void applyForce(Part other, float velocity) {
 		System.out.println(velocity);
-		other.getEntity().applyImpulse(new Vector(-velocity/4, 10f*(Math.abs(velocity)/10)), null);
+		// Plus l'objet arrive avec une vitesse importante plus le tremplin l'expulsera haut
+		// La velocity negative en x sert juste a donner un mouvement qui va plus vers la droite
+		// a l'objet qui rencontre le tremplin (les valeurs ont ete trouvees en tatonnant)
+		other.getEntity().applyImpulse(new Vector(-velocity / 4, 10f * (Math.abs(velocity) / 10)), null);
 	}
 
 }
