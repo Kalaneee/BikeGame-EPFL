@@ -86,9 +86,9 @@ public abstract class ActorGame implements Game {
 	public void setViewCandidate(Positionable c) {
 		viewCandidate = c;
 	}
-	
+
 	public void getPayload() {
-		
+
 	}
 
 	// This event is raised when game has just started
@@ -125,13 +125,15 @@ public abstract class ActorGame implements Game {
 			Transform viewTransform = Transform.I.scaled(VIEW_SCALE).translated(viewCenter);
 			window.setRelativeTransform(viewTransform);
 		} else {
-			ImageGraphics background = new ImageGraphics("metal.cracked.5.png", 0.4f, 0.15f, new Vector(4.9f, -2.5f), 1, 90f);
+			ImageGraphics background = new ImageGraphics("metal.cracked.5.png", 0.4f, 0.15f, new Vector(4.9f, -2.5f), 1,
+					90f);
 			background.setParent(window);
 			background.draw(window);
-//			TextGraphics pauseMsg = new TextGraphics("", 0.05f, Color.BLUE, Color.BLACK, 0.02f, true, false, new Vector(4.0f, 12.0f),
-//					1.0f, 100.0f);
-			TextGraphics pauseMsg = new TextGraphics("", 0.05f, Color.BLUE, Color.BLACK, 0.02f, true, false, new Vector(2.6f, 8.6f),
-					1.0f, 100.0f);
+			// TextGraphics pauseMsg = new TextGraphics("", 0.05f, Color.BLUE,
+			// Color.BLACK, 0.02f, true, false, new Vector(4.0f, 12.0f),
+			// 1.0f, 100.0f);
+			TextGraphics pauseMsg = new TextGraphics("", 0.05f, Color.BLUE, Color.BLACK, 0.02f, true, false,
+					new Vector(2.6f, 8.6f), 1.0f, 100.0f);
 			pauseMsg.setParent(background);
 			pauseMsg.setRelativeTransform(Transform.I.translated(0.0f, -1.0f));
 			pauseMsg.setText("PAUSE");
@@ -139,12 +141,12 @@ public abstract class ActorGame implements Game {
 			if (getKeyboard().get(KeyEvent.VK_T).isReleased() && !isDrawing) {
 				for (Actor a : listActor) {
 					if ((a instanceof Bike)) {
-						a.setPosition(getMouse().getPosition());
+						((Bike) a).setPosition(getMouse().getPosition());
 					}
-					
+
 				}
 			}
-			
+
 			if (getKeyboard().get(KeyEvent.VK_RIGHT).isDown() && !isDrawing) {
 				shiftedViewCenter = shiftedViewCenter.add((new Vector(0.4f, 0.0f)));
 			}
@@ -163,10 +165,11 @@ public abstract class ActorGame implements Game {
 			if (getKeyboard().get(KeyEvent.VK_G).isReleased()) {
 				points.clear();
 				isDrawing = true;
-//				editMsg = new TextGraphics("", 0.05f, Color.BLUE, Color.BLACK, 0.02f, true, false, new Vector(2.85f, 11.0f),
-//						1.0f, 100.0f);
-				editMsg = new TextGraphics("", 0.05f, Color.BLUE, Color.BLACK, 0.02f, true, false, new Vector(2.0f, 7.6f),
-						1.0f, 100.0f);
+				// editMsg = new TextGraphics("", 0.05f, Color.BLUE,
+				// Color.BLACK, 0.02f, true, false, new Vector(2.85f, 11.0f),
+				// 1.0f, 100.0f);
+				editMsg = new TextGraphics("", 0.05f, Color.BLUE, Color.BLACK, 0.02f, true, false,
+						new Vector(2.0f, 7.6f), 1.0f, 100.0f);
 				editMsg.setParent(background);
 				editMsg.setRelativeTransform(Transform.I.translated(0.0f, -1.0f));
 				editMsg.setText("EDIT-MOD");
@@ -175,7 +178,7 @@ public abstract class ActorGame implements Game {
 				isDrawing = false;
 				if (points.size() != 0) {
 					points.add(points.get(0));
-					formeTerrain = new Polyline(points); 
+					formeTerrain = new Polyline(points);
 					Terrain terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK);
 				}
 			}
@@ -214,13 +217,13 @@ public abstract class ActorGame implements Game {
 	public WheelConstraintBuilder getWheelConstraintBuilder() {
 		return world.createWheelConstraintBuilder();
 	}
-	
+
 	public RopeConstraintBuilder getRopeConstraintBuilder() {
 		return world.createRopeConstraintBuilder();
 	}
-	
+
 	public RevoluteConstraintBuilder getRevoluteConstraintBuilder() {
 		return world.createRevoluteConstraintBuilder();
 	}
-	
+
 }
