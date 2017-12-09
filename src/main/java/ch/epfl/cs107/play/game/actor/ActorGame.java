@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import com.sun.glass.events.KeyEvent;
-import com.sun.glass.events.MouseEvent;
 
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.actor.bike.Bike;
@@ -30,7 +29,7 @@ import ch.epfl.cs107.play.window.Mouse;
 import ch.epfl.cs107.play.window.Window;
 
 public abstract class ActorGame implements Game {
-	private static Window window;
+	private Window window;
 	private FileSystem fileSystem;
 	private World world;
 	private ArrayList<Actor> listActor = new ArrayList<Actor>();

@@ -14,7 +14,6 @@ import ch.epfl.cs107.play.math.Polyline;
 import ch.epfl.cs107.play.math.RopeConstraintBuilder;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
-import jdk.nashorn.internal.ir.BlockLexicalContext;
 
 public class Pendule extends Wheel {
 	private Crate c1;

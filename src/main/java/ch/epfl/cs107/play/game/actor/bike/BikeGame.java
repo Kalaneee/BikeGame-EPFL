@@ -9,21 +9,16 @@ import java.awt.Color;
 import com.sun.glass.events.KeyEvent;
 
 import ch.epfl.cs107.play.game.actor.ActorGame;
-import ch.epfl.cs107.play.game.actor.ImageGraphics;
-import ch.epfl.cs107.play.game.actor.ShapeGraphics;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.actor.crate.Crate;
 import ch.epfl.cs107.play.game.actor.general.Bascule;
 import ch.epfl.cs107.play.game.actor.general.Pendule;
-import ch.epfl.cs107.play.game.actor.general.Start;
 import ch.epfl.cs107.play.game.actor.general.Terrain;
 import ch.epfl.cs107.play.game.actor.general.Tremplin;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.Polygon;
 import ch.epfl.cs107.play.math.Polyline;
-import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
-import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
 
 public class BikeGame extends ActorGame{

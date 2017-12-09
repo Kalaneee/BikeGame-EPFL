@@ -11,7 +11,6 @@ import ch.epfl.cs107.play.game.actor.ActorGame;
 import ch.epfl.cs107.play.game.actor.GameEntity;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
-import ch.epfl.cs107.play.game.actor.bike.BikeGame;
 import ch.epfl.cs107.play.math.Circle;
 import ch.epfl.cs107.play.math.Contact;
 import ch.epfl.cs107.play.math.ContactListener;
