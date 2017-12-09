@@ -197,6 +197,8 @@ public class Player {
 	public Vector getKnee1Location(float pos) {
 		// Les valeurs des getters pour le pedalement ont ete trouvees en 
 		// tatonnant et en utilisant la trigonometrie
+		// le 1er nombre represente le centre de la rotation et le second divise par 6 
+		// represente la "longueur du rayon" de cette rotation
 		float x = (float) (0.2 + Math.cos(pos) / 6);
 		float y = (float) (0.5 + Math.sin(pos) / 6);
 		return new Vector(Direction(x), y);
