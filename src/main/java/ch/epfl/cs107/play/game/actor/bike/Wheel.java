@@ -51,9 +51,8 @@ public class Wheel extends GameEntity implements Actor {
 		partBuilder.setShape(circle);
 		partBuilder.setFriction(10f);
 		partBuilder.build();
-		//graphic = new ImageGraphics(img, rayon * 2.0f, rayon * 2.0f, new Vector(rayon, rayon));
 		graphic = new ShapeGraphics(circle, colorInt, colorExt, .1f, 1.f, 0);
-		//Polyline line = new Polyline(position , new Vector(position.getX() , position.getY()));
+		// la ligne represente le rayon dans la roue
 		if (ligne) {
 			Polyline line = new Polyline(Vector.ZERO, new Vector(0.0f, rayon));
 			imgLine = new ShapeGraphics(line, Color.BLACK, Color.BLACK, .1f, 1.f, 0);
@@ -67,10 +66,6 @@ public class Wheel extends GameEntity implements Actor {
 		return getEntity().getTransform();
 	}
 	
-	public Entity getEntity2() {
-		return this.getEntity();
-	}
-	
 	public Vector getVelocity() {
 		return getEntity().getVelocity();
 	}
@@ -82,41 +77,58 @@ public class Wheel extends GameEntity implements Actor {
 		}
 	}
 	
-	public void attach(Entity vehicle, Vector anchor, Vector axis) {
+	// Nous utilisons cette methode dans ActorGame, pour teleporter le velo
+	public Entity getEntity2() {
+		return this.getEntity();
+	}
+	
+	/**
+	 *  Cette methode lie la roue a l'Entity entre en parametre
+	 * @param vehicle : l'Entity qui sera liee a la roue, dans notre cas : le bike
+	 * @param anchor :  point d'ancrage du vehicule
+	 * @param axis : axe le long duquel la roue peut se deplacer
+	 */
+	protected void attach(Entity vehicle, Vector anchor, Vector axis) {
 		WheelConstraintBuilder constraintBuilder = getOwner().getWheelConstraintBuilder();
 		constraintBuilder.setFirstEntity(vehicle);
-		// point d'ancrage du vehicule : 
 		constraintBuilder.setFirstAnchor(anchor);
-		// Entity associee a la roue :
+		// Entity associee a la roue
 		constraintBuilder.setSecondEntity(getEntity());
-		// point d'ancrage de la roue (son centre):
+		// point d'ancrage de la roue (son centre)
 		constraintBuilder.setSecondAnchor(Vector.ZERO);
-		// axe le long duquel la roue peut se deplacer :
 		constraintBuilder.setAxis(axis);
-		// frequence du ressort associé
+		// frequence du ressort associe
 		constraintBuilder.setFrequency(3.0f);
 		constraintBuilder.setDamping(0.5f);
-		// force angulaire maximale pouvant être appliquée //à la roue pour la faire tourner : 
+		// force angulaire maximale pouvant etre appliquee a la roue pour la faire tourner 
 		constraintBuilder.setMotorMaxTorque(10.0f); 
 		constraint = constraintBuilder.build();
 	}
 	
-	public void power(float speed) {
+	/**
+	 * Methode pour donner une vitesse a la roue
+	 * @param speed : on donne la vitesse de la roue en parametre pour eviter qu'elle ne depasse
+	 * 				  la vitesse maximale
+	 */
+	protected void power(float speed) {
 		if (this.getSpeed() < MAX_WHEEL_SPEED) {
 			constraint.setMotorEnabled(true);
 			constraint.setMotorSpeed(speed);
 		}
 	}
 	
-	public void relax() {
+	// Methode pour eteindre le moteur
+	protected void relax() {
 		constraint.setMotorEnabled(false);
 	}
 	
-	public void detach() {
+	// Methode pour supprimer l'attache entre le bike et la roue
+	protected void detach() {
 		constraint.destroy();
 	}
 	
-	public float getAngularPosition() {
+	// Nous avons besoin de la position angulaiire pour l'animation de pedalement
+	protected float getAngularPosition() {
 		return getEntity().getAngularPosition();
 	}
 	

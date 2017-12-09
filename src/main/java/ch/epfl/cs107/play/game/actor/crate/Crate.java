@@ -57,6 +57,8 @@ public class Crate extends GameEntity implements Actor {
 		graphic.draw(canvas);
 	}
 	
+	// Nous devons mettre cette methode public car nous l'utilisons pour créer le pendule qui n'est 
+	// pas das le meme packet
 	public Entity getEntity() {
 		return super.getEntity();
 	}

@@ -40,18 +40,11 @@ public class Player {
 			if (playerColor == null) {
 				throw new NullPointerException("Valeur indispensable !");
 			}
-			
-			//if (fixed = null) {
-			//	throw new NullPointerException("Une position est obligatoire !");
-			//}
-			
 			if (bike == null) {
 				throw new NullPointerException("Valeur indispensable !");
 			}
 		}
-		
 		finally {
-			
 		}
 		
 		// Draw player head;
@@ -91,7 +84,9 @@ public class Player {
 
 	}
 
-	public void playerDraw(Canvas canvas) {
+	// Nous avons decider de draw le player ici et non pas dans ActorGame car selon nous, le Player n'est pas un 
+	// Actor a part entiere, seulement une image au-dessus de l'entity bike
+	protected void playerDraw(Canvas canvas) {
 		imgArm.draw(canvas);
 		imgHead.draw(canvas);
 		imgBody.draw(canvas);
@@ -101,9 +96,13 @@ public class Player {
 		imgLeg2.draw(canvas);
 	}
 
-	public void TurnBike() {
-		if (!sensMarche) { // regarde à droite
-			sensMarche = true; // regarde à gauche
+	/**
+	 * Methode qui inverse la boolean indiquant la direction du velo et appelle la methode 
+	 *  pour le redessiner
+	 */
+	protected void TurnBike() {
+		if (!sensMarche) { // regarde a droite
+			sensMarche = true; // regarde a gauche
 			reDraw();
 		} else if (sensMarche) {
 			sensMarche = false;
@@ -112,7 +111,10 @@ public class Player {
 
 	}
 
-	public void reDraw() {
+	/**
+	 * Methode permettant de redessiner le Player lorsque l'on change de direction
+	 */
+	private void reDraw() {
 		imgArm.setShape(new Polyline(getShoulderLocation(), getHandLocation()));
 		imgBody.setShape(new Polyline(getShoulderLocation(), getHipLocation()));
 		imgThight1.setShape(new Polyline(getHipLocation(), getKnee1Location()));
@@ -121,12 +123,20 @@ public class Player {
 		imgLeg2.setShape(new Polyline(getKnee2Location(), getFoot2Location()));
 	}
 
-	public void celebrate(float time) {
+	/**
+	 * Methode affichant l'animation du bras qui monte puis descend lorsque l'on a reussi un niveau 
+	 * @param time : un timer qui s'incremente puis decremente
+	 */
+	protected void celebrate(float time) {
 		// Nous faisons ici une rotation du bras autour de l'epaule
 		imgArm.setRelativeTransform(Transform.I.rotated(time / 150.0f, getShoulderLocation()));
 	}
 
-	public void pedale(float position) {
+	/**
+	 * Methode qui redefinit les cuisses/jambes du cycliste lors du pedalement
+	 * @param position : la position angulaire de la roue
+	 */
+	protected void pedale(float position) {
 		Vector posKnee1 = getKnee1Location(position);
 		Vector posKnee2 = getKnee2Location(position);
 		Vector posFoot1 = getFoot1Location(position);
@@ -140,11 +150,10 @@ public class Player {
 
 	/**
 	 * Recalcule les positions des membres selon la direction du cycliste. S'il
-	 * regarde à droite, les coordonées en abcisse sont conservées, s'il regarde
-	 * à gauche elles sont inversées.
+	 * regarde a droite, les coordonées en abcisse sont conservees, s'il regarde
+	 * a gauche elles sont inversees.
 	 * 
-	 * @param x:
-	 *            un float, la position en x.
+	 * @param x: un float, la position en x.
 	 * @return : un float, la nouvelle position selon la direction du cycliste.
 	 */
 	public float Direction(float x) {
@@ -155,6 +164,11 @@ public class Player {
 		}
 	}
 
+	/**
+	 * Les methodes qui suivent sont des getters des positions necessaires pour dessiner le player
+	 * @return un Vector, la position de la tete ou du genou par ex, cette valeur sera multipliée par
+	 *         (-1) si le cycliste regarde vers la gauche.
+	 */
 	public Vector getHeadLocation() {
 		return new Vector(Direction(0.0f), 1.75f);
 	}
@@ -175,13 +189,16 @@ public class Player {
 		return new Vector(Direction(0.2f), 0.5f);
 	}
 
-	// Les valeurs des getters pour le pedalement ont ete trouvees en 
-	// tatonnant en utilisant la trigonometrie
+	/**
+	 * Nous avons surcharge certains getters pour l'animation du pedalement
+	 * @param pos : la position angulaire de la roue
+	 * @return un Vector, la nouvelle position du genou, du pieds etc
+	 */
 	public Vector getKnee1Location(float pos) {
-		float x, y;
-		
-		x = (float) (0.2 + Math.cos(pos) / 6);
-		y = (float) (0.5 + Math.sin(pos) / 6);
+		// Les valeurs des getters pour le pedalement ont ete trouvees en 
+		// tatonnant et en utilisant la trigonometrie
+		float x = (float) (0.2 + Math.cos(pos) / 6);
+		float y = (float) (0.5 + Math.sin(pos) / 6);
 		return new Vector(Direction(x), y);
 	}
 
@@ -190,10 +207,8 @@ public class Player {
 	}
 
 	public Vector getKnee2Location(float pos) {
-		float x, y;
-
-		x = (float) (0.1 - (Math.cos(pos) / 6));
-		y = (float) (0.4 - (Math.sin(pos) / 6));
+		float x = (float) (0.1 - (Math.cos(pos) / 6));
+		float y = (float) (0.4 - (Math.sin(pos) / 6));
 		return new Vector(Direction(x), y);
 	}
 
@@ -202,10 +217,8 @@ public class Player {
 	}
 
 	public Vector getFoot1Location(float pos) {
-		float x, y;
-
-		x = (float) (0.1 + (Math.cos(pos) / 6));
-		y = (float) (0.0 + (Math.sin(pos) / 6));
+		float x = (float) (0.1 + (Math.cos(pos) / 6));
+		float y = (float) (0.0 + (Math.sin(pos) / 6));
 		return new Vector(Direction(x), y);
 	}
 
@@ -214,57 +227,8 @@ public class Player {
 	}
 
 	public Vector getFoot2Location(float pos) {
-		float x, y;
-		
-		x = (float) (-0.1 - (Math.cos(pos) / 6));
-		y = (float) (0.0 - (Math.sin(pos) / 6));
+		float x = (float) (-0.1 - (Math.cos(pos) / 6));
+		float y = (float) (0.0 - (Math.sin(pos) / 6));
 		return new Vector(Direction(x), y);
 	}
-	// public Vector getKnee1Location() {
-	// return new Vector(Direction(0.2f), 0.5f);
-	// }
-	//
-	// public Vector getKnee1Location(float pos) {
-	// float x, y;
-	//
-	// x = (float) (0.2 + Math.cos(pos) / 5);
-	// y = (float) (0.5 + Math.sin(pos) / 5);
-	// return new Vector(Direction(x), y);
-	// }
-	//
-	// public Vector getKnee2Location() {
-	// return new Vector(Direction(0.1f), 0.4f);
-	// }
-	//
-	// public Vector getKnee2Location(float pos) {
-	// float x, y;
-	//
-	// x = (float) (0.1 - Math.cos(pos) / 5);
-	// y = (float) (0.4 - Math.sin(pos) / 5);
-	// return new Vector(Direction(x), y);
-	// }
-	//
-	// public Vector getFoot1Location() {
-	// return new Vector(Direction(-0.2f), 0.0f);
-	// }
-	//
-	// public Vector getFoot1Location(float pos) {
-	// float x, y;
-	//
-	// x = (float) (-0.2 + Math.cos(pos) / 5);
-	// y = (float) (0.0 + Math.sin(pos) / 5);
-	// return new Vector(Direction(x), y);
-	// }
-	//
-	// public Vector getFoot2Location() {
-	// return new Vector(Direction(0.1f), 0.0f);
-	// }
-	//
-	// public Vector getFoot2Location(float pos) {
-	// float x, y;
-	//
-	// x = (float) (-0.1 - Math.cos(pos) / 5);
-	// y = (float) (0.0 - Math.sin(pos) / 5);
-	// return new Vector(Direction(x), y);
-	// }
 }

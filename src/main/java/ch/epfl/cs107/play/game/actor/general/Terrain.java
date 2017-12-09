@@ -43,7 +43,8 @@ public class Terrain extends GameEntity implements Actor {
 		if (colorLigne == null) {
 			throw new NullPointerException();
 		}
-
+		
+		// la taile de la Ligne peut etre de 0
 		if ((tailleLigne < 0)) {
 			throw new IllegalArgumentException("Une epaisseur de ligne doit etre >= 0");
 		}
@@ -53,6 +54,7 @@ public class Terrain extends GameEntity implements Actor {
 		partBuilder.build();
 		graphic = new ShapeGraphics(terrain, color, colorLigne, tailleLigne, 1.f, 0);
 		graphic.setParent(getEntity());
+		// nous testons d'abord si nous volons des buissons pour eviter une erreur de compilation
 		if (bushPos != null) {
 			for (int i = 0; i < bushPos.length; i++) {
 				bushList.add(new ImageGraphics("bush.png", 1.f, 1.0f, bushPos[i], 1, 0));
@@ -93,7 +95,9 @@ public class Terrain extends GameEntity implements Actor {
 			b.draw(canvas);
 		}
 	}
-
+	
+	// Nous avons besoin de getEntity le terrain pour la Bascule, c'est pour cela
+	// que nous l'avons redefinie ici
 	protected Entity getEntity() {
 		return super.getEntity();
 	}

@@ -77,12 +77,12 @@ public class Finish extends GameEntity implements Actor {
 		getEntity().addContactListener(listener);
 	}
 	
+	/**
+	 * Nous avons besoin de savoir si nous avons gagne ou pas dans BikeGame
+	 * @return une boolean, true = nous avons gagne
+	 */
 	public boolean getWin() {
 		return win;
-	}
-	
-	public void afficheText() {
-		mainMsg.draw(getOwner().getCanvas());
 	}
 
 	@Override
@@ -98,8 +98,8 @@ public class Finish extends GameEntity implements Actor {
 	@Override
 	public void draw(Canvas canvas) {
 		graphic.draw(canvas);
-//		if (win)
-//			BikeGame.mainMsg.draw(canvas);
-			//message.draw(getOwner().getCanvas()));
+		if (win) {
+			mainMsg.draw(canvas);
+		}
 	}
 }

@@ -42,8 +42,9 @@ public class Tremplin extends GameEntity implements Actor {
 			public void beginContact(Contact contact) {
 				Part other = contact.getOther();
 				hit = true;
+				// Nous prenons ici la vitesse de l'objet qui rencontre le tremplin
 				float velocity = other.getEntity().getAngularVelocity();
-				applyForce(other, velocity);
+				impulseTremplin(other, velocity);
 				graphicExt = new ImageGraphics("jumper.extended.png", width, height * 2f);
 				graphicExt.setParent(getEntity());
 			}
@@ -67,6 +68,8 @@ public class Tremplin extends GameEntity implements Actor {
 
 	@Override
 	public void draw(Canvas canvas) {
+		// Nous avons deux ImageGraphics differentes pour faire une animation au tremplin
+		// lorsque celu-ci entre en contact avec quelque chose
 		if (hit && animTimer <= 100) {
 			graphicExt.draw(canvas);
 			animTimer++;
@@ -78,8 +81,13 @@ public class Tremplin extends GameEntity implements Actor {
 			graphic.draw(canvas);
 		}
 	}
-
-	public void applyForce(Part other, float velocity) {
+	
+	/**
+	 * Cette methode donne un impulse a l'objet qui rencontre le tremplin
+	 * @param other : Part en contact avec le tremplin
+	 * @param velocity : vitesse de la Part en contact avec le tremplin
+	 */
+	private void impulseTremplin(Part other, float velocity) {
 		// Plus l'objet arrive avec une vitesse importante plus le tremplin l'expulsera haut
 		// La velocity negative en x sert juste a donner un mouvement qui va plus vers la droite
 		// a l'objet qui rencontre le tremplin (les valeurs ont ete trouvees en tatonnant)

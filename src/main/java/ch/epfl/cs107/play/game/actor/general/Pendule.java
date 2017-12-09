@@ -24,8 +24,11 @@ public class Pendule extends Wheel {
 	public Pendule(ActorGame game, boolean fixed, Vector position, float hautDepart, float rayonBoule) {
 		super(game, false, new Vector(position.getX() - hautDepart, position.getY()), rayonBoule, Color.DARK_GRAY,
 				Color.BLACK, false);
+		
+		// Nous créons une crate qui sera le soutien du pendule
 		c1 = new Crate(getOwner(), true, new Vector(position.getX(), position.getY()), blockWidth, blockHeight,
 				"stone.broken.4.png");
+		
 		RopeConstraintBuilder ropeConstraintBuilder = getOwner().getRopeConstraintBuilder();
 		ropeConstraintBuilder.setFirstEntity(c1.getEntity());
 		ropeConstraintBuilder.setFirstAnchor(new Vector(blockWidth / 2, blockHeight / 2));
@@ -38,6 +41,8 @@ public class Pendule extends Wheel {
 	}
 
 	public void draw(Canvas canvas) {
+		// Nous creeons un polyline qui represente la corde entre la wheel et la crate, le polyline est redefini 
+		// a chaque draw et bouge donc en suivant le mouvement de la wheel
 		new ShapeGraphics(new Polyline(new Vector(c1.getPosition().getX() + blockWidth / 2, c1.getPosition().getY()),
 				super.getPosition()), null, Color.GRAY, .1f, 1.f, 0).draw(canvas);
 		super.draw(canvas);

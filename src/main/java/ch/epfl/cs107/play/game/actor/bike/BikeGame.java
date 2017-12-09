@@ -183,7 +183,6 @@ public class BikeGame extends ActorGame{
 			bike.afficheText();
 			}
 		if (flag.getWin()) {
-			flag.afficheText();
 			bike.celebration();
 			bike.deleteListener();
 			}
