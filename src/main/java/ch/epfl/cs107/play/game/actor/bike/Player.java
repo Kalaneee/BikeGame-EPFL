@@ -35,7 +35,25 @@ public class Player {
 	private Polyline pLeg2;
 
 	public Player(Color playerColor, Entity bike, boolean sensMarche) {
-
+		
+		try {
+			if (playerColor == null) {
+				throw new NullPointerException("Valeur indispensable !");
+			}
+			
+			//if (fixed = null) {
+			//	throw new NullPointerException("Une position est obligatoire !");
+			//}
+			
+			if (bike == null) {
+				throw new NullPointerException("Valeur indispensable !");
+			}
+		}
+		
+		finally {
+			
+		}
+		
 		// Draw player head;
 		pHead = new Circle(0.2f, getHeadLocation());
 		imgHead = new ShapeGraphics(pHead, null, Color.RED, .1f, 1.f, 0);

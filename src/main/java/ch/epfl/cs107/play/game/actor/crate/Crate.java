@@ -20,6 +20,18 @@ public class Crate extends GameEntity implements Actor {
 	
 	public Crate(ActorGame game, boolean fixed, Vector position, float width, float height, String image) {
 		super(game, fixed, position);
+		
+		if ((height == 0f) || (height < 0)) {
+			throw new IllegalArgumentException();
+		}
+		if ((width == 0f) || (width < 0)) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (image == null) {
+			throw new NullPointerException();
+		}
+		
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		Polygon polygon = new Polygon(Vector.ZERO, new Vector(width, 0.0f), new Vector(width, height),
 				new Vector(0.0f, height));

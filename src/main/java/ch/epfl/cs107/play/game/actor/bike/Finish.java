@@ -27,8 +27,28 @@ public class Finish extends GameEntity implements Actor {
 
 	public Finish(ActorGame game, boolean fixed, Vector position, float rayon, String img) {
 		super(game, fixed, position);
+		
+		try {
+			// Un game et une position sont des arguments obligatoires pour une GameEntity
+			// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
+			if (game == null) {			
+				throw new NullPointerException("Un game est obligatoire !");
+			}
+			if (position == null) {
+				throw new NullPointerException("Une position est obligatoire !");
+			}
+			if ((rayon == 0f) || (rayon < 0)) {
+				throw new IllegalArgumentException("rayon invalide !");
+			}
+		}
+		catch (IllegalArgumentException e) { 
+			if ((rayon == 0f) || (rayon < 0)) {
+		       System.out.println("il faut un rayon strictement superieur à 0" + e.getMessage());
+			}
+		}
+		
 		PartBuilder partBuilder = getEntity().createPartBuilder();
-		//Je mets un rayon plus grand pour que la hitbox du drapeau touche le Bike qui est Ghost et non pas les 
+		//Nous mettons un rayon plus grand pour que la hitbox du drapeau touche le Bike qui est Ghost et non pas les 
 		// uniquement les roues qui ne le sont pas
 		Circle circle = new Circle(rayon * 4);
 		partBuilder.setShape(circle);

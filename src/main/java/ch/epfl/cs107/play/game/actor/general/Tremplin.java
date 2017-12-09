@@ -80,7 +80,6 @@ public class Tremplin extends GameEntity implements Actor {
 	}
 
 	public void applyForce(Part other, float velocity) {
-		System.out.println(velocity);
 		// Plus l'objet arrive avec une vitesse importante plus le tremplin l'expulsera haut
 		// La velocity negative en x sert juste a donner un mouvement qui va plus vers la droite
 		// a l'objet qui rencontre le tremplin (les valeurs ont ete trouvees en tatonnant)

@@ -41,6 +41,26 @@ public class Bike extends GameEntity implements Actor {
 
 	public Bike(ActorGame game, boolean fixed, Vector position, Polygon polygon, float rayon) {
 		super(game, fixed, position);
+		
+		try {
+			// Un game et une position sont des arguments obligatoires pour une GameEntity
+			// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
+			if (game == null) {			
+				throw new NullPointerException("Un game est obligatoire !");
+			}
+			if (position == null) {
+				throw new NullPointerException("Une position est obligatoire !");
+			}
+			if ((rayon == 0f) || (rayon < 0)) {
+				throw new IllegalArgumentException("Un rayon valide pour la roue doit etre donnee");
+			}
+		}
+		catch (IllegalArgumentException e) { 
+			if ((rayon == 0f) || (rayon < 0)) {
+		       System.out.println("il faut un rayon de roue strictement superieur a 0" + e.getMessage());
+			}
+		}
+		
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		partBuilder.setShape(polygon);
 		partBuilder.setGhost(true);

@@ -79,13 +79,26 @@ public class BikeGame extends ActorGame{
 	private Crate c1;
 	private Crate c2;
 	private Crate c3;
-	private Crate plateforme;
-//	private Vector posBike = new Vector(2.0f, 5.0f);
-	private Vector posBike = new Vector(155.0f, -20.0f);
+	private Crate c4;
+	private Crate c5;
+	private Crate c6;
+	private Crate c7;
+	private Crate c8;
+	private Crate c9;
 	private Vector posCrate1 = new Vector(9.0f, 5.0f);
 	private Vector posCrate2 = new Vector(9.0f, 7.0f);
 	private Vector posCrate3 = new Vector(9.0f, 6.0f);
+	private Vector posCrate4 = new Vector(104.0f, -15.0f);
+	private Vector posCrate5 = new Vector(106.0f, -15.0f);
+	private Vector posCrate6 = new Vector(108.0f, -15.0f);
+	private Vector posCrate7 = new Vector(110.0f, -15.0f);
+	private Vector posCrate8 = new Vector(112.0f, -15.0f);
+	private Vector posCrate9 = new Vector(114.0f, -15.0f);
+	
+	private Crate plateforme;
+	private Crate plateforme2;
 	private Vector posPlateforme= new Vector(0.0f, 3.0f);
+	private Vector posPlateforme2= new Vector(133f, -18.0f);
 	
 	private Polygon polyBike = new Polygon (
 			0.0f, 0.5f,
@@ -94,6 +107,8 @@ public class BikeGame extends ActorGame{
 			-0.5f, 1.0f);
 	private Bike bike;
 	private final float RAYON_ROUES = 0.5f;
+	private Vector posBike = new Vector(2.0f, 5.0f);
+	//private Vector posBike = new Vector(155.0f, -20.0f);
 	
 	private Finish flag;
 	private float rayonFlag = 0.5f;
@@ -124,18 +139,33 @@ public class BikeGame extends ActorGame{
 		msgCrash = new TextGraphics("", 0.1f, Color.BLACK);
 		msgCrash.draw(window);
 
-		terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, new Color(139, 69, 19), new Color(0,128,0));
+		terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, new Color(139, 69, 19), new Color(0,128,0), 0.15f);
+		
 		c1 = new Crate(this, fixed, posCrate1, 1, 1, "stone.broken.4.png");
 		c2 = new Crate(this, fixed, posCrate2, 1, 1, "stone.broken.1.png");
 		c3 = new Crate(this, fixed, posCrate3, 1, 1, "stone.broken.2.png");
+		c4 = new Crate(this, fixed, posCrate4, 1, 1, "blocker.dead.png");
+		c5 = new Crate(this, fixed, posCrate5, 1, 1, "blocker.happy.png");
+		c6 = new Crate(this, fixed, posCrate6, 1, 1, "blocker.dead.png");
+		c7 = new Crate(this, fixed, posCrate7, 1, 1, "blocker.happy.png");
+		c8 = new Crate(this, fixed, posCrate8, 1, 1, "blocker.dead.png");
+		c9 = new Crate(this, fixed, posCrate9, 1, 1, "blocker.happy.png");
+		
 		pendule1 = new Pendule(this, true, posPendule1, 4.0f, 0.5f);
+		
 		bascule1 = new Bascule(this, false, posBascule1, 3.5f, 0.5f, "wood.4.png", terrain);
 		bascule2 = new Bascule(this, false, posBascule2, 3.5f, 0.5f, "wood.4.png", terrain);
 		bascule3 = new Bascule(this, false, posBascule3, 6.5f, 0.7f, "wood.4.png", terrain);
+		
 		plateforme = new Crate(this, true, posPlateforme, 5, 0.7f, "wood.3.png");
+		plateforme2 = new Crate(this, true, posPlateforme2, 5, 1, "wood.3.png");
+		
 		bike = new Bike(this, fixed, posBike, polyBike, RAYON_ROUES);
+		
 		tremplin1 = new Tremplin(this, true, posTremplin1, 2.0f, 1.0f, "jumper.normal.png");
+		
 		setViewCandidate(bike);
+		
 		flag = new Finish(this, true, posFlag, rayonFlag, "flag.red.png");
 		
 		return true;

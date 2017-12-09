@@ -21,7 +21,6 @@ import ch.epfl.cs107.play.math.WheelConstraintBuilder;
 import ch.epfl.cs107.play.window.Canvas;
 
 public class Wheel extends GameEntity implements Actor {
-	//private boolean arriere; // true = roue arrière -> à gauche, false = roue avant -> à droite
 	private WheelConstraint constraint;
 	private ShapeGraphics graphic;
 	private ShapeGraphics imgLine;
@@ -30,6 +29,22 @@ public class Wheel extends GameEntity implements Actor {
 
 	public Wheel(ActorGame game, boolean fixed, Vector position, float rayon, Color colorInt, Color colorExt, boolean ligne) {
 		super(game, fixed, position);
+		
+		// Un game et une position sont des arguments obligatoires pour une GameEntity
+		// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
+		
+		if ((rayon == 0f) || (rayon < 0)) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (colorInt == null) {
+			throw new NullPointerException();
+		}
+		
+		if (colorExt == null) {
+			throw new NullPointerException();
+		}
+		
 		this.ligne = ligne;
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		Circle circle = new Circle(rayon);
@@ -70,16 +85,16 @@ public class Wheel extends GameEntity implements Actor {
 	public void attach(Entity vehicle, Vector anchor, Vector axis) {
 		WheelConstraintBuilder constraintBuilder = getOwner().getWheelConstraintBuilder();
 		constraintBuilder.setFirstEntity(vehicle);
-		// point d'ancrage du véhicule : 
+		// point d'ancrage du vehicule : 
 		constraintBuilder.setFirstAnchor(anchor);
-		// Entity associée à la roue :
+		// Entity associee a la roue :
 		constraintBuilder.setSecondEntity(getEntity());
 		// point d'ancrage de la roue (son centre):
 		constraintBuilder.setSecondAnchor(Vector.ZERO);
-		// axe le long duquel la roue peut se déplacer :
+		// axe le long duquel la roue peut se deplacer :
 		constraintBuilder.setAxis(axis);
-		// fréquence du ressort associé
-		constraintBuilder.setFrequency(3.0f); 
+		// frequence du ressort associé
+		constraintBuilder.setFrequency(3.0f);
 		constraintBuilder.setDamping(0.5f);
 		// force angulaire maximale pouvant être appliquée //à la roue pour la faire tourner : 
 		constraintBuilder.setMotorMaxTorque(10.0f); 

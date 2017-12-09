@@ -11,6 +11,7 @@ import ch.epfl.cs107.play.game.actor.ActorGame;
 import ch.epfl.cs107.play.game.actor.GameEntity;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
 import ch.epfl.cs107.play.game.actor.ShapeGraphics;
+import ch.epfl.cs107.play.game.actor.bike.Wheel;
 import ch.epfl.cs107.play.math.Contact;
 import ch.epfl.cs107.play.math.ContactListener;
 import ch.epfl.cs107.play.math.Entity;
@@ -23,25 +24,42 @@ import ch.epfl.cs107.play.window.Canvas;
 
 public class Terrain extends GameEntity implements Actor {
 	private ShapeGraphics graphic;
-	//private ContactListener listener;
+	private ContactListener listener;
 
-	public Terrain(ActorGame game, boolean fixed, Vector position, Polyline terrain, Color color, Color colorLigne) {
+	public Terrain(ActorGame game, boolean fixed, Vector position, Polyline terrain, Color color, Color colorLigne, float tailleLigne) {
 		super(game, fixed, position);
+		
+		if (terrain == null) {
+			throw new NullPointerException();
+		}
+		
+		if (color == null) {
+			throw new NullPointerException();
+		}
+		
+		if (colorLigne == null) {
+			throw new NullPointerException();
+		}
+		
+		if ((tailleLigne < 0)) {
+			throw new IllegalArgumentException("Une epaisseur de ligne doit etre >= 0");
+		}
+		
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		partBuilder.setShape(terrain);
 		partBuilder.build();
-		graphic = new ShapeGraphics(terrain, color, colorLigne, .15f, 1.f, 0);
+		graphic = new ShapeGraphics(terrain, color, colorLigne, tailleLigne, 1.f, 0);
 		graphic.setParent(getEntity());
 		getOwner().addActor(this);
 //		listener = new ContactListener() {
 //			@Override
 //			public void beginContact(Contact contact) {
 //				Part other = contact.getOther();
-//
+//				System.out.println("classe  : "+other.getClass());
 //				// si contact avec les roues :
-//				if (other == roueGauche.getParts().get(0) || other == roueDroite.getParts().get(0)) {
-//					return;
-//				}
+////				if (other instanceof Wheel || other == roueDroite.getParts().get(0)) {
+////					return;
+////				}
 //			}
 //
 //			@Override

@@ -16,6 +16,20 @@ public abstract class GameEntity implements Actor{
 	private ActorGame game;
 	
 	public GameEntity(ActorGame game, boolean fixed, Vector position) {
+		// Un game et une position sont des arguments obligatoires pour une GameEntity
+		// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
+	
+		if (game == null) {
+			throw new NullPointerException("Valeur indispensable ! ");
+		}
+		
+		//if (fixed = null) {
+		//	throw new NullPointerException("Une position est obligatoire !");
+		//}
+		
+		if (position == null) {
+			throw new NullPointerException("Valeur indispensable !");
+		}
 		this.game = game;
 		EntityBuilder entityBuilder = game.getEntityBuilder();
 		entityBuilder.setFixed(fixed);
