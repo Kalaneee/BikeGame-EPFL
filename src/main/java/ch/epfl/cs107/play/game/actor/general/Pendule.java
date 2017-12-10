@@ -1,5 +1,5 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        8 déc. 2017
  */
 package ch.epfl.cs107.play.game.actor.general;

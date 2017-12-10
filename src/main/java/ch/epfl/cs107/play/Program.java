@@ -2,7 +2,6 @@ package ch.epfl.cs107.play;
 
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.actor.bike.BikeGame;
-import ch.epfl.cs107.play.game.tutorial.HelloWorldGame;
 import ch.epfl.cs107.play.io.DefaultFileSystem;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.io.FolderFileSystem;

@@ -1,5 +1,5 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        21 nov. 2017
  */
 package ch.epfl.cs107.play.game.tutorial;
@@ -32,7 +32,8 @@ public class ContactGame implements Game {
 
 	private ImageGraphics imgBlock;
 	private ShapeGraphics imgBall;
-
+	
+	// pour etre a l'ecoute de collisions potentielles
 	private BasicContactListener contactListener;
 
 	public boolean begin(Window window, FileSystem fileSystem) {
@@ -77,6 +78,7 @@ public class ContactGame implements Game {
 		imgBall.setDepth(0.0f);
 		imgBall.setParent(ball);
 
+		// la balle est receptive aux collisions 
 		contactListener = new BasicContactListener();
 		ball.addContactListener(contactListener);
 
@@ -86,21 +88,10 @@ public class ContactGame implements Game {
 	// This event is called at each frame
 	public void update(float deltaTime) {
 
-		// The actual rendering will be done now, by the program loop
-
-		// Game logic comes here
-		// Nothing to do, yet
-
-		// Simulate physics
-		// Our body is fixed, though, nothing will move
 		world.update(deltaTime);
 
-		// we must place the camera where we want
-		// We will look at the origin (identity) and increase the view size a
-		// bit
 		window.setRelativeTransform(Transform.I.scaled(10.0f));
 
-		// We can render our scene now,
 		imgBlock.draw(window);
 		imgBall.draw(window);
 
@@ -116,7 +107,6 @@ public class ContactGame implements Game {
 
 	// This event is raised after game ends, to release additional resources
 	public void end() {
-		// Empty on purpose, no cleanup required yet
+		
 	}
-
 }

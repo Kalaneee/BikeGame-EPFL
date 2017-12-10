@@ -1,5 +1,5 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        20 nov. 2017
  */
 package ch.epfl.cs107.play.game.tutorial;
@@ -30,58 +30,60 @@ public class RopeGame implements Game {
 	private Entity block;
 	private Entity ball;
 
-	private ImageGraphics imgBlock;
-	private ShapeGraphics imgBall;
+	private ImageGraphics Block;
+	private ShapeGraphics Ball;
 
+	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 
 		this.window = window;
-
-		// Le world
 		world = new World();
 		world.setGravity(new Vector(0.0f, -9.81f));
-		EntityBuilder entityBuilder = world.createEntityBuilder();
 
 		// BLOCK
-		entityBuilder.setFixed(true);
-		entityBuilder.setPosition(new Vector(1.0f, 0.5f));
-		block = entityBuilder.build();
+		// Creer le corps physique "block"
+		EntityBuilder entityBuilderBlock = world.createEntityBuilder();
+		entityBuilderBlock.setFixed(true);
+		entityBuilderBlock.setPosition(new Vector(1.f, 0.5f));
+		block = entityBuilderBlock.build();
 
+		// Creer une propriete geometrique pour block
 		PartBuilder partBuilderBlock = block.createPartBuilder();
-		Polygon polygonBlock = new Polygon(new Vector(0.0f, 0.0f), new Vector(1.0f, 0.0f), new Vector(1.0f, 1.0f),
+		Polygon polygon = new Polygon(new Vector(0.0f, 0.0f), new Vector(1.0f, 0.0f), new Vector(1.0f, 1.0f),
 				new Vector(0.0f, 1.0f));
-		partBuilderBlock.setShape(polygonBlock);
-		partBuilderBlock.setFriction(0.5f);
+		partBuilderBlock.setShape(polygon);
+		// on ajoute un coefficient de friction au block
+		partBuilderBlock.setFriction(0.00000000005f);
 		partBuilderBlock.build();
 
-		imgBlock = new ImageGraphics("stone.broken.4.png", 1, 1);
-		imgBlock.setAlpha(1.0f);
-		imgBlock.setDepth(0.0f);
-		imgBlock.setParent(block);
+		// Donne une image graphique au block
+		Block = new ImageGraphics("stone.broken.4.png", 1, 1);
+		Block.setAlpha(1.0f);
+		Block.setDepth(0.0f);
+		Block.setParent(block);
 
 		// BALL
-		entityBuilder.setFixed(false);
-		entityBuilder.setPosition(new Vector(0.3f, 4.0f));
-		ball = entityBuilder.build();
+		// Creer le corps physique "balle"
+		EntityBuilder entityBuilderBall = world.createEntityBuilder();
+		entityBuilderBall.setPosition(new Vector(0.2f, 4.0f));
+		ball = entityBuilderBall.build();
 
-		float ballRadius = 0.6f;
-		Vector ballPosition = new Vector(0.3f, 4.0f);
+		// Creer une propriete geometrique pour la balle
 		PartBuilder partBuilderBall = ball.createPartBuilder();
-		Circle circle = new Circle(ballRadius, ballPosition);
+		Circle circle = new Circle(0.6f, new Vector(0.3f, 4.0f));
 		partBuilderBall.setShape(circle);
 		partBuilderBall.build();
 
-		imgBall = new ShapeGraphics(circle, Color.BLUE, Color.RED, .1f, 1.f, 0);
-		imgBall.setAlpha(1.0f);
-		imgBall.setDepth(0.0f);
-		imgBall.setParent(ball);
+		// Donne une image graphique a la balle
+		Ball = new ShapeGraphics(circle, Color.BLUE, Color.RED, .1f, 1.f, 0);
+		Ball.setAlpha(1.0f);
+		Ball.setDepth(0.0f);
+		Ball.setParent(ball);
 
-		// LIER LA BALLE AU BLOCK
-		float blockWidth = 1.0f;
-		float blockHeight = 1.0f;
+		// Construit une contrainte de type "corde" entre le bloc et la balle
 		RopeConstraintBuilder ropeConstraintBuilder = world.createRopeConstraintBuilder();
 		ropeConstraintBuilder.setFirstEntity(block);
-		ropeConstraintBuilder.setFirstAnchor(new Vector(blockWidth / 2, blockHeight / 2));
+		ropeConstraintBuilder.setFirstAnchor(new Vector(1.0f / 2, 1.0f / 2));
 		ropeConstraintBuilder.setSecondEntity(ball);
 		ropeConstraintBuilder.setSecondAnchor(Vector.ZERO);
 		ropeConstraintBuilder.setMaxLength(3.0f);
@@ -91,31 +93,20 @@ public class RopeGame implements Game {
 		return true;
 	}
 
-	// This event is called at each frame
+	@Override
 	public void update(float deltaTime) {
 
-		// The actual rendering will be done now, by the program loop
-
-		// Game logic comes here
-		// Nothing to do, yet
-
-		// Simulate physics
-		// Our body is fixed, though, nothing will move
 		world.update(deltaTime);
 
-		// we must place the camera where we want
-		// We will look at the origin (identity) and increase the view size a
-		// bit
+		// place la camera ou on veut
 		window.setRelativeTransform(Transform.I.scaled(10.0f));
-
-		// We can render our scene now,
-		imgBlock.draw(window);
-		imgBall.draw(window);
+		Block.draw(window);
+		Ball.draw(window);
 	}
 
 	// This event is raised after game ends, to release additional resources
+	@Override
 	public void end() {
-		// Empty on purpose, no cleanup required yet
-	}
 
+	}
 }

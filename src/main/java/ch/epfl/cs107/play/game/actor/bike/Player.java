@@ -1,5 +1,5 @@
 /*
- *	Author:      Giulia Murgia
+ *	Authors:      Valentin Kaein - Giulia Murgia
  *	Date:        01.11.2017
  */
 

@@ -1,5 +1,5 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        20 nov. 2017
  */
 package ch.epfl.cs107.play.game.tutorial;
@@ -31,7 +31,6 @@ public class SimpleCrateGame implements Game {
 
 	// graphical representation of the body
 	private ImageGraphics imgBlock;
-
 	private ImageGraphics imgCrate;
 
 	// This event is raised when game has just started
@@ -45,33 +44,39 @@ public class SimpleCrateGame implements Game {
 		EntityBuilder entityBuilder = world.createEntityBuilder();
 
 		// BLOCK
+		// nous creeons un corps physique pour notre bloc:
 		entityBuilder.setFixed(true);
 		entityBuilder.setPosition(new Vector(1.0f, 0.5f));
 		block = entityBuilder.build();
-
+		
+		// on associe des fixtures (proprietes geometriques) a notre bloc:
 		PartBuilder partBuilderBlock = block.createPartBuilder();
 		Polygon polygonBlock = new Polygon(new Vector(0.0f, 0.0f), new Vector(1.0f, 0.0f), new Vector(1.0f, 1.0f),
 				new Vector(0.0f, 1.0f));
 		partBuilderBlock.setShape(polygonBlock);
 		partBuilderBlock.setFriction(0.5f);
 		partBuilderBlock.build();
-
+		
+		// representaton graphique associee au body:
 		imgBlock = new ImageGraphics("stone.broken.4.png", 1, 1);
 		imgBlock.setAlpha(1.0f);
 		imgBlock.setDepth(0.0f);
 		imgBlock.setParent(block);
 
 		// CRATE
+		// nous creeons un corps physique pour notre crate:
 		entityBuilder.setFixed(false);
 		entityBuilder.setPosition(new Vector(0.2f, 4.0f));
 		crate = entityBuilder.build();
-
+		
+		// on associe des fixtures (proprietes geometriques) a notre crate:
 		PartBuilder partBuilderCrate = crate.createPartBuilder();
 		Polygon polygonCrate = new Polygon(new Vector(0.0f, 0.0f), new Vector(1.0f, 0.0f), new Vector(1.0f, 1.0f),
 				new Vector(0.0f, 1.0f));
 		partBuilderCrate.setShape(polygonCrate);
 		partBuilderCrate.build();
 
+		// representaton graphique associee au body:
 		imgCrate = new ImageGraphics("box.4.png", 1, 1);
 		imgCrate.setAlpha(1.0f);
 		imgCrate.setDepth(0.0f);
@@ -83,28 +88,17 @@ public class SimpleCrateGame implements Game {
 	// This event is called at each frame
 	public void update(float deltaTime) {
 
-		// The actual rendering will be done now, by the program loop
-
-		// Game logic comes here
-		// Nothing to do, yet
-
-		// Simulate physics
-		// Our body is fixed, though, nothing will move
+		
 		world.update(deltaTime);
 
-		// we must place the camera where we want
-		// We will look at the origin (identity) and increase the view size a
-		// bit
 		window.setRelativeTransform(Transform.I.scaled(10.0f));
 
-		// We can render our scene now,
 		imgBlock.draw(window);
 		imgCrate.draw(window);
 	}
 
-	// This event is raised after game ends, to release additional resources
+	
 	public void end() {
-		// Empty on purpose, no cleanup required yet
+		
 	}
-
 }

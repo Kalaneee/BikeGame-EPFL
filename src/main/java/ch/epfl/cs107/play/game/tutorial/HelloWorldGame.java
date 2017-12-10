@@ -1,3 +1,7 @@
+/*
+ *	Authors:      Valentin Kaelin - Giulia Murgia
+ *	Date:        20 nov. 2017
+ */
 package ch.epfl.cs107.play.game.tutorial;
 
 import ch.epfl.cs107.play.game.Game;
@@ -63,7 +67,6 @@ public class HelloWorldGame implements Game {
         graphics2.setDepth(1.0f);
         graphics2.setParent(body);
         graphics.setParent(body);
-
         
         // Successfully initiated
         return true;
@@ -95,6 +98,5 @@ public class HelloWorldGame implements Game {
     @Override
     public void end() {
         // Empty on purpose, no cleanup required yet
-    }
-    
+    } 
 }

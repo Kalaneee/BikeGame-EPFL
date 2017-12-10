@@ -1,5 +1,5 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        23 nov. 2017
  */
 package ch.epfl.cs107.play.game.actor;
@@ -30,7 +30,6 @@ import ch.epfl.cs107.play.window.Window;
 
 public abstract class ActorGame implements Game {
 	private Window window;
-	private FileSystem fileSystem;
 	private World world;
 	private ArrayList<Actor> listActor = new ArrayList<Actor>();
 	private Vector viewCenter;
@@ -123,7 +122,6 @@ public abstract class ActorGame implements Game {
 	 */
 	public boolean begin(Window window, FileSystem fileSystem) {
 		this.window = window;
-		this.fileSystem = fileSystem;
 		world = new World();
 		world.setGravity(new Vector(0.0f, -9.81f));
 		viewCenter = Vector.ZERO;

@@ -1,5 +1,5 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        20 nov. 2017
  */
 package ch.epfl.cs107.play.game.tutorial;
@@ -62,7 +62,7 @@ public class ScaleGame implements Game {
 
 		// PLANK
 		entityBuilder.setFixed(false);
-		 entityBuilder.setPosition(new Vector(-2.5f, 0.8f));
+		entityBuilder.setPosition(new Vector(-2.5f, 0.8f));
 		plank = entityBuilder.build();
 
 		PartBuilder partBuilderPlank = plank.createPartBuilder();
@@ -83,7 +83,6 @@ public class ScaleGame implements Game {
 		ball = entityBuilder.build();
 
 		float ballRadius = 0.5f;
-		// Vector ballPosition = new Vector(0.5f, 4.f);
 		PartBuilder partBuilderBall = ball.createPartBuilder();
 		Circle circle = new Circle(ballRadius, Vector.ZERO);
 		partBuilderBall.setShape(circle);
@@ -95,7 +94,7 @@ public class ScaleGame implements Game {
 		imgBall.setDepth(0.0f);
 		imgBall.setParent(ball);
 
-		// LIER LA PLANCHE AU BLOCK
+		// On lie la planche au block avec la contrainte suivante
 		float plankWidth = 5f;
 		float plankHeight = 0.2f;
 		float blockWidth = 10f;
@@ -114,8 +113,7 @@ public class ScaleGame implements Game {
 	// This event is called at each frame
 	public void update(float deltaTime) {
 
-		// The actual rendering will be done now, by the program loop
-
+		// commandes permettant d agir sur la balle
 		if (window.getKeyboard().get(KeyEvent.VK_LEFT).isDown()) {
 			ball.applyAngularForce(10.0f);
 
@@ -123,17 +121,10 @@ public class ScaleGame implements Game {
 			ball.applyAngularForce(-10.0f);
 		}
 
-		// Simulate physics
-		// Our body is fixed, though, nothing will move
-
 		world.update(deltaTime);
 
-		// we must place the camera where we want
-		// We will look at the origin (identity) and increase the view size a
-		// bit
 		window.setRelativeTransform(Transform.I.scaled(10.0f));
 
-		// We can render our scene now,
 		imgBlock.draw(window);
 		imgBall.draw(window);
 		imgPlank.draw(window);
@@ -141,7 +132,6 @@ public class ScaleGame implements Game {
 
 	// This event is raised after game ends, to release additional resources
 	public void end() {
-		// Empty on purpose, no cleanup required yet
-	}
 
+	}
 }

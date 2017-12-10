@@ -1,12 +1,11 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        23 nov. 2017
  */
 package ch.epfl.cs107.play.game.actor;
 
 
 import ch.epfl.cs107.play.math.Positionable;
-import ch.epfl.cs107.play.math.Vector;
 
 public interface Actor extends Positionable, Graphics {
 	/**
