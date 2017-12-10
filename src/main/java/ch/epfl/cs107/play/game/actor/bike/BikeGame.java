@@ -21,7 +21,9 @@ import ch.epfl.cs107.play.math.Polyline;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Window;
 
-public class BikeGame extends ActorGame{
+public class BikeGame extends ActorGame {
+	
+	private FileSystem fileSystem;
 	
 	private boolean fixed = false;
 	// Nous n'avons pas mis de friction sur les roues pour pouvoir faire des terrains glissants 
@@ -191,6 +193,7 @@ public class BikeGame extends ActorGame{
 	
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
+		this.fileSystem = fileSystem;
 		
 		// Nous dessinons un texte vide pour eviter que nos macs crash environ
 		// une seconde a l'affichage du 1er texte
@@ -242,7 +245,7 @@ public class BikeGame extends ActorGame{
 		super.update(deltaTime);
 		if (super.getKeyboard().get(KeyEvent.VK_R).isReleased()) {
 			super.destroyAllActor();
-			begin((Window)getCanvas(), getFileSystem());
+			begin((Window)getCanvas(), fileSystem);
 			}
 		if (bike.isHit()) {
 			bike.afficheText();

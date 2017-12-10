@@ -16,11 +16,10 @@ public abstract class GameEntity implements Actor{
 	private ActorGame game;
 	
 	public GameEntity(ActorGame game, boolean fixed, Vector position) {
-		
 		// Un game et une position sont des arguments obligatoires pour une GameEntity
 		// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
 		if (game == null) {
-			throw new NullPointerException("Valeur indispensable ! ");
+			throw new NullPointerException("Valeur indispensable !");
 		}
 		if (position == null) {
 			throw new NullPointerException("Valeur indispensable !");
@@ -36,6 +35,10 @@ public abstract class GameEntity implements Actor{
 		this(game, fixed, Vector.ZERO);
 	}
 	
+	/**
+	 * Pour detruire une entite detruisons une entite et nous l'enlevons en meme temps de la 
+	 * liste des acteurs
+	 */
 	public void destroy() {
 		body.destroy();
 		getOwner().removeActor(this);
@@ -49,6 +52,11 @@ public abstract class GameEntity implements Actor{
 		return this.game;
 	}
 	
+	/**
+	 * Nous utilisons cette methode dans Bike, pour ne pas compter les contact entre les roues
+	 * et le bike.
+	 * @return une liste de Part de notre Entity
+	 */
 	public List<Part> getParts() {
 		return body.getParts();
 	}
