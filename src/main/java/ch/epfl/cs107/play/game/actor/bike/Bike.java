@@ -35,52 +35,54 @@ public class Bike extends GameEntity implements Actor {
 	private ImageGraphics smokeGauche;
 	private ImageGraphics smokeDroite;
 	private boolean frein;
+	// 2 floats pour le timer de l'animation en cas de victoire
 	private float animBras = 0;
 	private float animBras2 = 150;
 	private ContactListener listener;
 
 	public Bike(ActorGame game, boolean fixed, Vector position, Polygon polygon, float rayon) {
 		super(game, fixed, position);
-		
-		try {
-			// Un game et une position sont des arguments obligatoires pour une GameEntity
-			// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
-			if (game == null) {			
-				throw new NullPointerException("Un game est obligatoire !");
-			}
-			if (position == null) {
-				throw new NullPointerException("Une position est obligatoire !");
-			}
-			if ((rayon == 0f) || (rayon < 0)) {
-				throw new IllegalArgumentException("Un rayon valide pour la roue doit etre donnee");
-			}
+
+		// Un game et une position sont des arguments obligatoires pour une
+		// GameEntity
+		// On ne met pas de bloc catch pour que si la valeur est nulle on
+		// ait un arret du programme.
+		if (game == null) {
+			throw new NullPointerException("Un game est obligatoire !");
 		}
-		catch (IllegalArgumentException e) { 
-			if ((rayon == 0f) || (rayon < 0)) {
-		       System.out.println("il faut un rayon de roue strictement superieur a 0" + e.getMessage());
-			}
+		if (position == null) {
+			throw new NullPointerException("Une position est obligatoire !");
 		}
-		
+		if ((rayon == 0f) || (rayon < 0)) {
+			throw new IllegalArgumentException("Un rayon valide pour la roue doit etre donnee");
+		}
+
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		partBuilder.setShape(polygon);
 		partBuilder.setGhost(true);
 		partBuilder.build();
 
-		// graphic = new ShapeGraphics(polygon, Color.YELLOW, Color.RED, .1f,
-		// 1.f, 0);
-		// graphic.setParent(getEntity());
+		// Nous creeons ici un player qui est un ensemble de polyline
 		player = new Player(Color.RED, getEntity(), bikeLook);
 		getOwner().addActor(this);
-		roueGauche = new Wheel(game, fixed, new Vector(position.getX() - 1, position.getY()), rayon, new Color(0, 0, 0, 0), Color.BLUE, true);
-		roueDroite = new Wheel(game, fixed, new Vector(position.getX() + 1, position.getY()), rayon, new Color(0, 0, 0, 0), Color.BLUE, true);
+		// Nous creeons les 2 roues du bike, une decalee de 1 a gauche et
+		// l'autre de 1 a droite
+		roueGauche = new Wheel(game, fixed, new Vector(position.getX() - 1, position.getY()), rayon,
+				new Color(0, 0, 0, 0), Color.BLUE, true);
+		roueDroite = new Wheel(game, fixed, new Vector(position.getX() + 1, position.getY()), rayon,
+				new Color(0, 0, 0, 0), Color.BLUE, true);
+		// Nous attons les 2 roues au bike
 		roueGauche.attach(getEntity(), new Vector(-1.0f, 0.0f), new Vector(-0.5f, -1.0f));
 		roueDroite.attach(getEntity(), new Vector(1.0f, 0.0f), new Vector(0.5f, -1.0f));
-		// smoke = new ImageGraphics("smoke.gray.3.png", 1, 1, new Vector(2.6f,
-		// 0.1f));
+
+		// Nous creeons 2 imageGraphics de Smoke qui apparaissent en cas de
+		// freinage
 		smokeGauche = new ImageGraphics("smoke.gray.3.png", 1, 1, new Vector(2.6f, 0.1f));
 		smokeDroite = new ImageGraphics("smoke.gray.3.png", 1, 1, new Vector(-2f, 0.1f));
 		smokeGauche.setParent(getEntity());
 		smokeDroite.setParent(getEntity());
+
+		// Nous creeons les 2 messages qui serviront en cas de chute
 		mainMsg = new TextGraphics("", 0.1f, Color.RED, Color.BLACK, 0.02f, true, false, new Vector(0.5f, -2.0f), 1.0f,
 				100.0f);
 		mainMsg.setParent(getOwner().getCanvas());
@@ -96,13 +98,16 @@ public class Bike extends GameEntity implements Actor {
 			public void beginContact(Contact contact) {
 				Part other = contact.getOther();
 
+				// Si le bike entre en contact avec un element ghost nous ne le
+				// comptons pas, par ex le flag de fin de partie
 				if (contact.getOther().isGhost()) {
 					return;
 				}
-				// si contact avec les roues :
+				// si contact avec les roues, nous ne les comptons pas :
 				if (other == roueGauche.getParts().get(0) || other == roueDroite.getParts().get(0)) {
 					return;
 				}
+				// autrement il y a collision
 				hit = true;
 			}
 
@@ -113,10 +118,20 @@ public class Bike extends GameEntity implements Actor {
 		getEntity().addContactListener(listener);
 	}
 
-	public void deleteListener() {
+	/**
+	 * Methode pour rendre invulnerable le cycliste en cas de victoire
+	 */
+	protected void deleteListener() {
 		getEntity().removeContactListener(listener);
 	}
-	
+
+	/**
+	 * Methode pour definir la position du bike et de ses 2 roues, nous
+	 * utilisons cette methode lors de la teleportation
+	 * 
+	 * @param pos
+	 *            : un Vector, la nouvelle position du bike
+	 */
 	public void setPosition(Vector pos) {
 		getEntity().setPosition(pos);
 		roueDroite.getEntity2().setPosition(new Vector(pos.getX() + 1, pos.getY()));
@@ -136,6 +151,7 @@ public class Bike extends GameEntity implements Actor {
 	@Override
 	public void draw(Canvas canvas) {
 		player.playerDraw(canvas);
+		// Si nous freinons nous dessinons la smoke
 		if (frein) {
 			// Nous dessinons la smoke uniquement si la vitesse de la roue
 			// non-montrice est superieure a 5 dans un esprit de realisme
@@ -147,19 +163,32 @@ public class Bike extends GameEntity implements Actor {
 		}
 	}
 
-	public void afficheText() {
+	/**
+	 * Methode utilisee en cas de chute dans le BikeGame pour annoncer la
+	 * defaite
+	 */
+	protected void afficheText() {
 		mainMsg.draw(getOwner().getCanvas());
 		secondMsg.draw(getOwner().getCanvas());
 	}
 
-	public boolean isHit() {
+	/**
+	 * Methode pour savoir si nous avons perdu ou pas
+	 * 
+	 * @return un boolean, true = il y a une collision
+	 */
+	protected boolean isHit() {
 		return hit;
 	}
 
 	// Methode pour faire monter le bras puis apres 150 update il fait descendre
 	// le bras
 	// a la position initiale
-	public void celebration() {
+	/**
+	 * Methode pour faire monter le bras puis apres 150 update il fait descendre
+	 * le bras a la position initiale
+	 */
+	protected void celebration() {
 		if (animBras <= 150) {
 			animBras++;
 			player.celebrate(animBras);
@@ -170,7 +199,10 @@ public class Bike extends GameEntity implements Actor {
 		}
 	}
 
-	public void turnBike() {
+	/**
+	 * Methode pour tourner le velo, nous inversons donc la boolean
+	 */
+	private void turnBike() {
 		player.TurnBike();
 		aGauche = !aGauche;
 	}
@@ -182,6 +214,8 @@ public class Bike extends GameEntity implements Actor {
 
 	@Override
 	public void update(float deltaTime) {
+		// Nous remettons le frein a false pour ne pas avoir la smoke
+		// inutilement
 		frein = false;
 		// Nous decrementons le timer a chaque update
 		// La condition est ici pour eviter que le timer se decremente trop pour
@@ -193,46 +227,49 @@ public class Bike extends GameEntity implements Actor {
 			this.destroy();
 			roueDroite.destroy();
 			roueGauche.destroy();
-
 			mainMsg.setText("GAME-OVER");
 			secondMsg.setText("PRESS-R-TO-REPLAY");
-			// message.draw(getOwner().getCanvas());
 		}
-		// Animation de pedalement 
+		// Animation de pedalement
 		if (aGauche) {
 			player.pedale(roueGauche.getAngularPosition());
 		} else {
 			player.pedale(-roueDroite.getAngularPosition());
 		}
-
+		// Espace = tourner le velo
 		if (getOwner().getKeyboard().get(KeyEvent.VK_SPACE).isReleased()) {
 			turnBike();
 		}
-
+		// Touche du haut pour avancer
 		if (getOwner().getKeyboard().get(KeyEvent.VK_UP).isDown()) {
 			if (aGauche) {
 				roueGauche.power(-20);
 			} else {
 				roueDroite.power(20);
 			}
-		} else if (getOwner().getKeyboard().get(KeyEvent.VK_DOWN).isDown()) {
+		}
+		// Touche du bas pour freiner
+		else if (getOwner().getKeyboard().get(KeyEvent.VK_DOWN).isDown()) {
 			frein = true;
 			if (aGauche) {
 				roueGauche.power(0);
 			} else {
 				roueDroite.power(0);
 			}
-		} else {
+		}
+		// Si nous n'accelerons pas ou ne freinons pas, les roues sont relachees
+		else {
 			roueGauche.relax();
 			roueDroite.relax();
 		}
+		// 2 touches suivantes sont la pour pouvoir donner une rotation au bike
 		if (getOwner().getKeyboard().get(KeyEvent.VK_LEFT).isDown()) {
 			getEntity().applyAngularForce(20.0f);
 		}
 		if (getOwner().getKeyboard().get(KeyEvent.VK_RIGHT).isDown()) {
 			getEntity().applyAngularForce(-20.0f);
 		}
-
+		// Touche J = saut
 		if (getOwner().getKeyboard().get(KeyEvent.VK_J).isReleased()) {
 			// Nous avons mis un timer pour eviter que le joueur puisse
 			// passer au-dessus de tous les obstacles en sautant

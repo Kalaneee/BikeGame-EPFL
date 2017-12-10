@@ -22,7 +22,7 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Window;
 
 public class BikeGame extends ActorGame {
-	
+	// Nous gardons en attribut le fileSystem pour pouvoir l'utiliser lors du reset
 	private FileSystem fileSystem;
 	
 	private boolean fixed = false;
@@ -30,40 +30,6 @@ public class BikeGame extends ActorGame {
 	private float friction = 100.0f;
 	
 	private Terrain terrain;
-//	private Polyline formeTerrain = new Polyline (
-//			-10.0f, -1000.0f,
-//			-10.0f, 20.0f,
-//			0.0f, 20.0f,
-//			0.0f, 0.0f,
-//			10.0f, 0.0f,
-//			15.0f, -7.0f,
-//			25.0f, -7.0f,
-//			35.0f, 0.0f,
-//			45.0f, 0.0f,
-//			50.0f, -20.0f,
-//			55.0f, 0.0f,
-//			65.0f, 0.0f,
-//			70.0f, -20.0f,
-//			75.0f, 0.0f,
-//			85.0f, 0.0f,
-//			100.0f, -20.0f,
-//			120.0f, -20.0f,
-//			125.0f, -18.0f,
-//			135.0f, -45.0f,
-//			145.0f, -20.0f,
-//			163.0f, -20.0f,
-//			163.0f, -21.0f,
-//			165.0f, -21.0f,
-//			170.0f, -35.0f,
-//			175.0f, -20.0f,
-//			240.0f, -20.0f,
-//			240.0f, -25.0f,
-//			245.0f, -25.0f,
-//			245.0f, -20.0f,
-//			260.0f, -20.0f,
-//			260.0f, 0.0f,
-//			280.0f, 0.0f,
-//			280.0f, -1000.0f);
 	private Polyline formeTerrain = new Polyline (
 			-10.0f, -1000.0f,
 			-10.0f, 20.0f,
@@ -109,6 +75,8 @@ public class BikeGame extends ActorGame {
 			13.0f, 2.05f,
 			13.0f, -1.0f);
 	
+	// Nous creeons un tableau de vector contenant les positions
+	// des differents buissons sur le terrain
 	private Vector[] bushPos = {
 			new Vector(-5.0f, 0.0f),
 			new Vector(-15.0f, 7.0f),
@@ -164,6 +132,7 @@ public class BikeGame extends ActorGame {
 			0.0f, 2.0f,
 			-0.5f, 1.0f);
 	private Bike bike;
+	// Nous mettons le rayon des roues en final car celui-ci ne change pas
 	private final float RAYON_ROUES = 0.5f;
 	//private Vector posBike = new Vector(2.0f, 5.0f);
 	private Vector posBike = new Vector(155.0f, -20.0f);
@@ -195,7 +164,7 @@ public class BikeGame extends ActorGame {
 		super.begin(window, fileSystem);
 		this.fileSystem = fileSystem;
 		
-		// Nous dessinons un texte vide pour eviter que nos macs crash environ
+		// Nous dessinons un texte vide pour eviter que nos Macs crash environ
 		// une seconde a l'affichage du 1er texte
 		// de la partie. Sur nos PC, nous n'avons pas rencontre ce probleme
 		msgCrash = new TextGraphics("", 0.1f, Color.BLACK);
@@ -233,6 +202,7 @@ public class BikeGame extends ActorGame {
 		
 		tremplin1 = new Tremplin(this, true, posTremplin1, 2.0f, 1.0f, "jumper.normal.png");
 		
+		// Nous fixons la camera sur le bike
 		setViewCandidate(bike);
 		
 		flag = new Finish(this, true, posFlag, rayonFlag, "flag.red.png");
@@ -243,13 +213,17 @@ public class BikeGame extends ActorGame {
 	
 	public void update(float deltaTime) {
 		super.update(deltaTime);
+		// Si nous appuyons sur R, nous remettons le jeu a 0 donc nous supprimons
+		// tous les acteurs et nous relancons la methode begin
 		if (super.getKeyboard().get(KeyEvent.VK_R).isReleased()) {
 			super.destroyAllActor();
 			begin((Window)getCanvas(), fileSystem);
 			}
+		// Nous affichons les messages en cas de chute
 		if (bike.isHit()) {
 			bike.afficheText();
 			}
+		// Nous lancons l'animation et rendons invincible le bike en cas de victoire
 		if (flag.getWin()) {
 			bike.celebration();
 			bike.deleteListener();
