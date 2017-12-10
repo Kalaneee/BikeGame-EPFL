@@ -158,7 +158,7 @@ public abstract class ActorGame implements Game {
 				shiftedViewCenter = shiftedViewCenter.add((new Vector(0.4f, -0.4f)));
 			}
 			if (getKeyboard().get(KeyEvent.VK_C).isReleased() && !isDrawing) {
-				Crate crate = new Crate(this, false, getMouse().getPosition(), 1, 1, "stone.broken.1.png");
+				Crate crate = new Crate(this, false, getMouse().getPosition(), 1, 1, "stone.broken.1.png", 100.0f);
 			}
 			if (getKeyboard().get(KeyEvent.VK_G).isReleased()) {
 				points.clear();
@@ -177,7 +177,8 @@ public abstract class ActorGame implements Game {
 				if (points.size() != 0) {
 					points.add(points.get(0));
 					formeTerrain = new Polyline(points);
-					Terrain terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK, 0.1f, null);
+					Terrain terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK,
+							0.1f, null, 100.0f);
 				}
 			}
 			if (isDrawing) {
@@ -207,7 +208,7 @@ public abstract class ActorGame implements Game {
 		// Empty on purpose, no cleanup required yet
 	}
 
-	// Pour eviter de faire un getter du World
+	// Pour eviter de faire un getter du World entier
 	public EntityBuilder getEntityBuilder() {
 		return world.createEntityBuilder();
 	}

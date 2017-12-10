@@ -18,7 +18,7 @@ import ch.epfl.cs107.play.window.Canvas;
 public class Crate extends GameEntity implements Actor {
 	private ImageGraphics graphic;
 	
-	public Crate(ActorGame game, boolean fixed, Vector position, float width, float height, String image) {
+	public Crate(ActorGame game, boolean fixed, Vector position, float width, float height, String image, float friction) {
 		super(game, fixed, position);
 		
 		if ((height == 0f) || (height < 0)) {
@@ -27,15 +27,18 @@ public class Crate extends GameEntity implements Actor {
 		if ((width == 0f) || (width < 0)) {
 			throw new IllegalArgumentException();
 		}
-		
 		if (image == null) {
 			throw new NullPointerException();
+		}
+		if (friction <= 0f) {
+			throw new IllegalArgumentException("Une friction doit etre >= 0");
 		}
 		
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		Polygon polygon = new Polygon(Vector.ZERO, new Vector(width, 0.0f), new Vector(width, height),
 				new Vector(0.0f, height));
 		partBuilder.setShape(polygon);
+		partBuilder.setFriction(friction);
 		partBuilder.build();
 		graphic = new ImageGraphics(image, width, height);
 		graphic.setParent(getEntity());

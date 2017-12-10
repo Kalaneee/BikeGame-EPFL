@@ -228,7 +228,6 @@ public class Bike extends GameEntity implements Actor {
 		}
 		if (getOwner().getKeyboard().get(KeyEvent.VK_LEFT).isDown()) {
 			getEntity().applyAngularForce(20.0f);
-			// getEntity().applyImpulse(new Vector(0, 0.2f), null);
 		}
 		if (getOwner().getKeyboard().get(KeyEvent.VK_RIGHT).isDown()) {
 			getEntity().applyAngularForce(-20.0f);

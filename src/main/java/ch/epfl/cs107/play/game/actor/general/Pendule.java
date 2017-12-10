@@ -20,13 +20,13 @@ public class Pendule extends Wheel {
 	float blockWidth = 2.0f;
 	float blockHeight = 0.5f;
 
-	public Pendule(ActorGame game, boolean fixed, Vector position, float hautDepart, float rayonBoule) {
+	public Pendule(ActorGame game, boolean fixed, Vector position, float hautDepart, float rayonBoule, float friction) {
 		super(game, false, new Vector(position.getX() - hautDepart, position.getY()), rayonBoule, Color.DARK_GRAY,
 				Color.BLACK, false);
 		
 		// Nous créons une crate qui sera le soutien du pendule
 		c1 = new Crate(getOwner(), true, new Vector(position.getX(), position.getY()), blockWidth, blockHeight,
-				"stone.broken.4.png");
+				"stone.broken.4.png", friction);
 		
 		RopeConstraintBuilder ropeConstraintBuilder = getOwner().getRopeConstraintBuilder();
 		ropeConstraintBuilder.setFirstEntity(c1.getEntity());

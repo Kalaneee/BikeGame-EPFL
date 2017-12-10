@@ -49,7 +49,7 @@ public class Wheel extends GameEntity implements Actor {
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		Circle circle = new Circle(rayon);
 		partBuilder.setShape(circle);
-		partBuilder.setFriction(10f);
+		//partBuilder.setFriction(100f);
 		partBuilder.build();
 		graphic = new ShapeGraphics(circle, colorInt, colorExt, .1f, 1.f, 0);
 		// la ligne represente le rayon dans la roue

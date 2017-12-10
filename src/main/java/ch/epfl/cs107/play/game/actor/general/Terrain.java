@@ -24,7 +24,7 @@ public class Terrain extends GameEntity implements Actor {
 	private ArrayList<ImageGraphics> bushList = new ArrayList<ImageGraphics>();
 
 	public Terrain(ActorGame game, boolean fixed, Vector position, Polyline terrain, Color color, Color colorLigne,
-			float tailleLigne, Vector[] bushPos) {
+			float tailleLigne, Vector[] bushPos, float friction) {
 		super(game, fixed, position);
 
 		if (terrain == null) {
@@ -40,12 +40,18 @@ public class Terrain extends GameEntity implements Actor {
 		}
 		
 		// la taile de la Ligne peut etre de 0
-		if ((tailleLigne < 0)) {
+		if (tailleLigne < 0) {
 			throw new IllegalArgumentException("Une epaisseur de ligne doit etre >= 0");
+		}
+		
+		// Nous prenons aussi le cas ou la friction = 0 comme une erreur car le bike ne pourrait plus avancer
+		if (friction <= 0) {
+			throw new IllegalArgumentException("Une friction doit etre >= 0");
 		}
 
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		partBuilder.setShape(terrain);
+		partBuilder.setFriction(friction);
 		partBuilder.build();
 		graphic = new ShapeGraphics(terrain, color, colorLigne, tailleLigne, 1.f, 0);
 		graphic.setParent(getEntity());
