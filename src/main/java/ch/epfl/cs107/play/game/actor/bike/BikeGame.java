@@ -140,8 +140,8 @@ public class BikeGame extends ActorGame {
 	private Bike bike;
 	// Nous mettons le rayon des roues en final car celui-ci ne change pas
 	private final float RAYON_ROUES = 0.5f;
-	//private Vector posBike = new Vector(2.0f, 5.0f);
-	private Vector posBike = new Vector(215.0f, -20.0f);
+	private Vector posBike = new Vector(2.0f, 5.0f);
+	//private Vector posBike = new Vector(215.0f, -20.0f);
 	
 	private Finish flag;
 	private float rayonFlag = 0.5f;
@@ -164,7 +164,7 @@ public class BikeGame extends ActorGame {
 	private Tremplin tremplin1;
 	private Vector posTremplin1 = new Vector(163.0f, -21f);
 	
-	private Piques2 piques1;
+	private Piques piques1;
 	private Vector posPiques1 = new Vector(220.0f, -20.0f);
 	
 	private TextGraphics msgDeath;
@@ -210,7 +210,7 @@ public class BikeGame extends ActorGame {
 		
 		tremplin1 = new Tremplin(this, true, posTremplin1, 2.0f, 1.0f, "jumper.normal.png");
 		
-		piques1 = new Piques2(this, true, posPiques1, 3.0f, 1.0f, "spikes.png");
+		//piques1 = new Piques(this, true, posPiques1, 3.0f, 1.0f, "spikes.png", bike);
 		
 		// Nous fixons la camera sur le bike
 		setViewCandidate(bike);

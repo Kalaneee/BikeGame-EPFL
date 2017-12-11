@@ -24,9 +24,12 @@ ________________________________❄_CONTRÔLES_❄_____________________________
 (Si en Pause) :
 	 T: 		Téléporte le vélo sur le curseur de la souris (debug)
 	 C: 		Fais apparaître une Caisse sur le curseur de la souris
-	 G: 		Entrer en edit-mod, les prochains clics de souris
+	 Z: 		Entrer en edit-mod, les prochains clics de souris
 			seront les points du Polyline créé
-	 H: 		Quitter l'edit-mod, dessine le Polyline
+	 U: 		Quitter l'edit-mod, dessine le Polyline
+	 E: 		Ouvrir le menu pour modifier la couleur du cyliste.
+	 			Ensuite, choisir une couleur avec les touches du claviers 
+	 			proposées : V/B/R/D/W/G/Y
 
 
 

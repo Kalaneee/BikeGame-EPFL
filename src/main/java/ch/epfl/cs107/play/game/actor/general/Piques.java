@@ -5,6 +5,7 @@
 package ch.epfl.cs107.play.game.actor.general;
 
 import ch.epfl.cs107.play.game.actor.ActorGame;
+import ch.epfl.cs107.play.game.actor.bike.Bike;
 import ch.epfl.cs107.play.game.actor.crate.Crate;
 import ch.epfl.cs107.play.math.Contact;
 import ch.epfl.cs107.play.math.ContactListener;
@@ -14,16 +15,18 @@ import ch.epfl.cs107.play.math.Vector;
 public class Piques extends Crate{
 	private ContactListener listener;
 
-	public Piques(ActorGame game, boolean fixed, Vector position, float width, float height, String image) {
+	public Piques(ActorGame game, boolean fixed, Vector position, float width, float height, String image, Bike bike) {
 		super(game, fixed, position, width, height, image);
 		
 		listener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
 				Part other = contact.getOther();
+				if (other != null) {
+					System.out.println("je rentre");
+					contact.getOther().destroy();
+				}
 				
-				other.getEntity().destroy();
-				other.destroy();
 			}
 
 			@Override

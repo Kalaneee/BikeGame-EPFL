@@ -184,12 +184,12 @@ public abstract class ActorGame implements Game {
 			pauseMsg.setText("PAUSE");
 			pauseMsg.draw(window);
 			// Nous utilisons la touche T pour nous teleporter pour debug notre niveau
-			if (getKeyboard().get(KeyEvent.VK_T).isReleased() && !isDrawing) {
+			if (getKeyboard().get(KeyEvent.VK_T).isReleased() && !isDrawing && !choosingColor) {
 				// Nous changeons la position du bike et des roues
 				((Bike) payLoad).setPosition(getMouse().getPosition());
 			}
 			// E = Ouvrir le menu pour changer de couleur le cyliste
-			if (getKeyboard().get(KeyEvent.VK_E).isReleased() && !isDrawing) {
+			if (getKeyboard().get(KeyEvent.VK_E).isReleased() && !isDrawing && !choosingColor) {
 				choosingColor = !choosingColor;
 			}
 			// Si nous sommes en train de changer de couleur
@@ -198,20 +198,33 @@ public abstract class ActorGame implements Game {
 						1000f); 
 				chooseColor.setParent(window);
 				chooseColor.draw(getCanvas());
+				// Differentes couleurs de cyliste disponible
 				if (getKeyboard().get(KeyEvent.VK_R).isReleased()) {
 					((Bike) payLoad).createPlayer(Color.RED);
 					choosingColor = !choosingColor;
 				}
-				else if (getKeyboard().get(KeyEvent.VK_V).isReleased()) {
-					((Bike) payLoad).createPlayer(Color.GREEN);
+				else if (getKeyboard().get(KeyEvent.VK_G).isReleased()) {
+					((Bike) payLoad).createPlayer(new Color(39, 174, 96));
 					choosingColor = !choosingColor;
 				}
 				else if (getKeyboard().get(KeyEvent.VK_B).isReleased()) {
 					((Bike) payLoad).createPlayer(Color.BLUE);
 					choosingColor = !choosingColor;
 				}
-				else if (getKeyboard().get(KeyEvent.VK_J).isReleased()) {
+				else if (getKeyboard().get(KeyEvent.VK_Y).isReleased()) {
 					((Bike) payLoad).createPlayer(Color.YELLOW);
+					choosingColor = !choosingColor;
+				}
+				else if (getKeyboard().get(KeyEvent.VK_V).isReleased()) {
+					((Bike) payLoad).createPlayer(new Color(142, 68, 173));
+					choosingColor = !choosingColor;
+				}
+				else if (getKeyboard().get(KeyEvent.VK_D).isReleased()) {
+					((Bike) payLoad).createPlayer(Color.BLACK);
+					choosingColor = !choosingColor;
+				}
+				else if (getKeyboard().get(KeyEvent.VK_W).isReleased()) {
+					((Bike) payLoad).createPlayer(Color.WHITE);
 					choosingColor = !choosingColor;
 				}
 			}
@@ -230,11 +243,11 @@ public abstract class ActorGame implements Game {
 				shiftedViewCenter = shiftedViewCenter.add((new Vector(0.4f, -0.4f)));
 			}
 			// Si nous appuyons sur C, cela cree une Crate a l'endroit du curseur de la souris
-			if (getKeyboard().get(KeyEvent.VK_C).isReleased() && !isDrawing) {
+			if (getKeyboard().get(KeyEvent.VK_C).isReleased() && !isDrawing && !choosingColor) {
 				Crate crate = new Crate(this, false, getMouse().getPosition(), 1, 1, "stone.broken.1.png");
 			}
-			// Si nous appuyons sur G nous entrons en "edit-mod", pour dessiner un polyline
-			if (getKeyboard().get(KeyEvent.VK_G).isReleased()) {
+			// Si nous appuyons sur Z nous entrons en "edit-mod", pour dessiner un polyline
+			if (getKeyboard().get(KeyEvent.VK_Z).isReleased() && !choosingColor) {
 				points.clear();
 				isDrawing = true;
 				editMsg = new TextGraphics("", 0.05f, Color.BLUE, Color.BLACK, 0.02f, true, false,
@@ -243,8 +256,8 @@ public abstract class ActorGame implements Game {
 				editMsg.setRelativeTransform(Transform.I.translated(0.0f, -1.0f));
 				editMsg.setText("EDIT-MOD");
 			}
-			// Lorsque nous appuyons sur H, nous quittons l'edit mod et nous dessinons le polyline
-			if (getKeyboard().get(KeyEvent.VK_H).isReleased()) {
+			// Lorsque nous appuyons sur U, nous quittons l'edit mod et nous dessinons le polyline
+			if (getKeyboard().get(KeyEvent.VK_U).isReleased() && !choosingColor) {
 				isDrawing = false;
 				// Nous testons si nous avons pas 0 point ce qui causerait une erreur de compilation
 				if (points.size() != 0) {
