@@ -26,8 +26,6 @@ public class BikeGame extends ActorGame {
 	private FileSystem fileSystem;
 	
 	private boolean fixed = false;
-	// Nous n'avons pas mis de friction sur les roues pour pouvoir faire des terrains glissants 
-	private float friction = 100.0f;
 	
 	private Terrain terrain;
 	private Polyline formeTerrain = new Polyline (
@@ -60,20 +58,25 @@ public class BikeGame extends ActorGame {
 			225.0f, -22.0f,
 			235.0f, -22.0f,
 			238.0f, -20.0f,
-			240.0f, -20.0f,
-			240.0f, -25.0f,
-			245.0f, -25.0f,
-			245.0f, -20.0f,
+			241.0f, -20.0f,
+			241.0f, -25.0f,
+			248.0f, -25.0f,
+			248.0f, -20.0f,
 			260.0f, -20.0f,
 			260.0f, 0.0f,
 			280.0f, 0.0f,
 			280.0f, -1000.0f);
+	// Nous mettons une friction nulle au terrain car le PartBuilder
+	// ne l'utilisera pas. Il applique une friction au terrain
+	// seulement si le terrain est glissant
+	private float frictionTerrain = 0.0f;
 	private Terrain terrainGlissant;
 	private Polyline formeTerrainGlissant = new Polyline (
 			-0.2f, -1.0f,
 			-0.2f, 2.05f,
 			13.0f, 2.05f,
 			13.0f, -1.0f);
+	private float frictionGlissant = 0.001f;
 	
 	// Nous creeons un tableau de vector contenant les positions
 	// des differents buissons sur le terrain
@@ -135,7 +138,7 @@ public class BikeGame extends ActorGame {
 	// Nous mettons le rayon des roues en final car celui-ci ne change pas
 	private final float RAYON_ROUES = 0.5f;
 	//private Vector posBike = new Vector(2.0f, 5.0f);
-	private Vector posBike = new Vector(155.0f, -20.0f);
+	private Vector posBike = new Vector(215.0f, -20.0f);
 	
 	private Finish flag;
 	private float rayonFlag = 0.5f;
@@ -158,7 +161,8 @@ public class BikeGame extends ActorGame {
 	private Tremplin tremplin1;
 	private Vector posTremplin1 = new Vector(163.0f, -21f);
 	
-	private TextGraphics msgCrash;
+	private TextGraphics msgDeath;
+	private int nbDeaths = 0;
 	
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
@@ -167,36 +171,34 @@ public class BikeGame extends ActorGame {
 		// Nous dessinons un texte vide pour eviter que nos Macs crash environ
 		// une seconde a l'affichage du 1er texte
 		// de la partie. Sur nos PC, nous n'avons pas rencontre ce probleme
-		msgCrash = new TextGraphics("", 0.1f, Color.BLACK);
-		msgCrash.draw(window);
 
 		terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, new Color(139, 69, 19), new Color(0, 128, 0),
-				0.15f, bushPos, 100.0f);
+				0.15f, bushPos, false, frictionTerrain);
 		terrainGlissant = new Terrain(this, true, new Vector(225.0f, -22.0f), formeTerrainGlissant, new Color(127, 140, 141),
-				new Color(66, 66, 66), 0.0f, null, 0.5f);
+				new Color(66, 66, 66), 0.0f, null, true, frictionGlissant);
 
-		c1 = new Crate(this, fixed, posCrate1, 1, 1, "stone.broken.4.png", friction);
-		c2 = new Crate(this, fixed, posCrate2, 1, 1, "stone.broken.1.png", friction);
-		c3 = new Crate(this, fixed, posCrate3, 1, 1, "stone.broken.2.png", friction);
-		c4 = new Crate(this, fixed, posCrate4, 1, 1, "blocker.dead.png", friction);
-		c5 = new Crate(this, fixed, posCrate5, 1, 1, "blocker.happy.png", friction);
-		c6 = new Crate(this, fixed, posCrate6, 1, 1, "blocker.dead.png", friction);
-		c7 = new Crate(this, fixed, posCrate7, 1, 1, "blocker.happy.png", friction);
-		c8 = new Crate(this, fixed, posCrate8, 1, 1, "blocker.dead.png", friction);
-		c9 = new Crate(this, fixed, posCrate9, 1, 1, "blocker.happy.png", friction);
+		c1 = new Crate(this, fixed, posCrate1, 1, 1, "stone.broken.4.png");
+		c2 = new Crate(this, fixed, posCrate2, 1, 1, "stone.broken.1.png");
+		c3 = new Crate(this, fixed, posCrate3, 1, 1, "stone.broken.2.png");
+		c4 = new Crate(this, fixed, posCrate4, 1, 1, "blocker.dead.png");
+		c5 = new Crate(this, fixed, posCrate5, 1, 1, "blocker.happy.png");
+		c6 = new Crate(this, fixed, posCrate6, 1, 1, "blocker.dead.png");
+		c7 = new Crate(this, fixed, posCrate7, 1, 1, "blocker.happy.png");
+		c8 = new Crate(this, fixed, posCrate8, 1, 1, "blocker.dead.png");
+		c9 = new Crate(this, fixed, posCrate9, 1, 1, "blocker.happy.png");
 		
-		pendule1 = new Pendule(this, true, posPendule1, 4.0f, 0.5f, friction);
-		pendule2 = new Pendule(this, true, posPendule2, 4.0f, 0.5f, friction);
-		pendule3 = new Pendule(this, true, posPendule3, -5.0f, 0.5f, friction);
+		pendule1 = new Pendule(this, true, posPendule1, 4.0f, 0.5f);
+		pendule2 = new Pendule(this, true, posPendule2, 4.0f, 0.5f);
+		pendule3 = new Pendule(this, true, posPendule3, -5.0f, 0.5f);
 		
-		bascule1 = new Bascule(this, false, posBascule1, 3.5f, 0.5f, "wood.4.png", terrain, friction);
-		bascule2 = new Bascule(this, false, posBascule2, 3.5f, 0.5f, "wood.4.png", terrain, friction);
-		bascule3 = new Bascule(this, false, posBascule3, 6.5f, 0.7f, "wood.4.png", terrain, friction);
+		bascule1 = new Bascule(this, false, posBascule1, 3.5f, 0.5f, "wood.4.png", terrain);
+		bascule2 = new Bascule(this, false, posBascule2, 3.5f, 0.5f, "wood.4.png", terrain);
+		bascule3 = new Bascule(this, false, posBascule3, 6.5f, 0.7f, "wood.4.png", terrain);
 		
-		plateforme1 = new Crate(this, true, posPlateforme1, 5, 0.7f, "wood.3.png", friction);
-		plateforme2 = new Crate(this, true, posPlateforme2, 5, 1, "wood.3.png", friction);
+		plateforme1 = new Crate(this, true, posPlateforme1, 5, 0.7f, "wood.3.png");
+		plateforme2 = new Crate(this, true, posPlateforme2, 5, 1, "wood.3.png");
 		
-		mur1 = new Crate(this, fixed, posMur1, 0.5f, 8.0f, "wood.3.png", friction);
+		mur1 = new Crate(this, fixed, posMur1, 1.3f, 9.0f, "wood.3.png");
 		
 		bike = new Bike(this, fixed, posBike, polyBike, RAYON_ROUES);
 		
@@ -207,16 +209,24 @@ public class BikeGame extends ActorGame {
 		
 		flag = new Finish(this, true, posFlag, rayonFlag, "flag.red.png");
 		
+		msgDeath = new TextGraphics("", 0.05f, Color.RED, Color.RED, 0.08f, true, false, new Vector(-1.2f, -8.0f), 1.0f,
+				100.0f);
+		msgDeath.setText("DEATHS-" + nbDeaths);
+		msgDeath.setParent(window);
+		msgDeath.draw(window);
+		
 		return true;
 	}
 	
 	
 	public void update(float deltaTime) {
 		super.update(deltaTime);
+		msgDeath.draw(getCanvas());
 		// Si nous appuyons sur R, nous remettons le jeu a 0 donc nous supprimons
 		// tous les acteurs et nous relancons la methode begin
 		if (super.getKeyboard().get(KeyEvent.VK_R).isReleased()) {
 			super.destroyAllActor();
+			nbDeaths++;
 			begin((Window)getCanvas(), fileSystem);
 			}
 		// Nous affichons les messages en cas de chute
@@ -225,6 +235,7 @@ public class BikeGame extends ActorGame {
 			}
 		// Nous lancons l'animation et rendons invincible le bike en cas de victoire
 		if (flag.getWin()) {
+			nbDeaths = -1;
 			bike.celebration();
 			bike.deleteListener();
 			}

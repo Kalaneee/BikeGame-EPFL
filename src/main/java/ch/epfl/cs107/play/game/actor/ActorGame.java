@@ -188,7 +188,7 @@ public abstract class ActorGame implements Game {
 			}
 			// Si nous appuyons sur C, cela cree une Crate a l'endroit du curseur de la souris
 			if (getKeyboard().get(KeyEvent.VK_C).isReleased() && !isDrawing) {
-				Crate crate = new Crate(this, false, getMouse().getPosition(), 1, 1, "stone.broken.1.png", 100.0f);
+				Crate crate = new Crate(this, false, getMouse().getPosition(), 1, 1, "stone.broken.1.png");
 			}
 			// Si nous appuyons sur G nous entrons en "edit-mod", pour dessiner un polyline
 			if (getKeyboard().get(KeyEvent.VK_G).isReleased()) {
@@ -209,7 +209,7 @@ public abstract class ActorGame implements Game {
 					points.add(points.get(0));
 					formeTerrain = new Polyline(points);
 					Terrain terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK,
-							0.1f, null, 100.0f);
+							0.1f, null, false, 0.0f);
 				}
 			}
 			if (isDrawing) {

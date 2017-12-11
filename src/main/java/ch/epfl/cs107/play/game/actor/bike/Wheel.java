@@ -33,7 +33,7 @@ public class Wheel extends GameEntity implements Actor {
 		// Un game et une position sont des arguments obligatoires pour une GameEntity
 		// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
 		
-		if ((rayon == 0f) || (rayon < 0)) {
+		if (rayon <= 0f) {
 			throw new IllegalArgumentException();
 		}
 		
@@ -49,7 +49,7 @@ public class Wheel extends GameEntity implements Actor {
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		Circle circle = new Circle(rayon);
 		partBuilder.setShape(circle);
-		//partBuilder.setFriction(100f);
+		partBuilder.setFriction(100f);
 		partBuilder.build();
 		graphic = new ShapeGraphics(circle, colorInt, colorExt, .1f, 1.f, 0);
 		// la ligne represente le rayon dans la roue

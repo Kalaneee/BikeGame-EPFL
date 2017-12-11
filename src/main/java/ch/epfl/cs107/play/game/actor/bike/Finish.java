@@ -26,28 +26,24 @@ public class Finish extends GameEntity implements Actor {
 
 	public Finish(ActorGame game, boolean fixed, Vector position, float rayon, String img) {
 		super(game, fixed, position);
-		
-		try {
-			// Un game et une position sont des arguments obligatoires pour une GameEntity
-			// On ne met pas de bloc catch pour que si la valeur est nulle on ait un arret du programme.
-			if (game == null) {			
-				throw new NullPointerException("Un game est obligatoire !");
-			}
-			if (position == null) {
-				throw new NullPointerException("Une position est obligatoire !");
-			}
-			if ((rayon == 0f) || (rayon < 0)) {
-				throw new IllegalArgumentException("rayon invalide !");
-			}
+
+		// Un game et une position sont des arguments obligatoires pour une
+		// GameEntity
+		// On ne met pas de bloc catch pour que si la valeur est nulle on ait un
+		// arret du programme.
+		if (game == null) {
+			throw new NullPointerException("Un game est obligatoire !");
 		}
-		catch (IllegalArgumentException e) { 
-			if ((rayon == 0f) || (rayon < 0)) {
-		       System.out.println("il faut un rayon strictement superieur à 0" + e.getMessage());
-			}
+		if (position == null) {
+			throw new NullPointerException("Une position est obligatoire !");
 		}
-		
+		if ((rayon == 0f) || (rayon < 0)) {
+			throw new IllegalArgumentException("rayon invalide !");
+		}
+
 		PartBuilder partBuilder = getEntity().createPartBuilder();
-		//Nous mettons un rayon plus grand pour que la hitbox du drapeau touche le Bike qui est Ghost et non pas les 
+		// Nous mettons un rayon plus grand pour que la hitbox du drapeau touche
+		// le Bike qui est Ghost et non pas les
 		// uniquement les roues qui ne le sont pas
 		Circle circle = new Circle(rayon * 4);
 		partBuilder.setShape(circle);
@@ -56,8 +52,9 @@ public class Finish extends GameEntity implements Actor {
 		graphic = new ImageGraphics(img, rayon * 2.0f, rayon * 2.0f, new Vector(rayon, rayon));
 		graphic.setParent(getEntity());
 		getOwner().addActor(this);
-		mainMsg = new TextGraphics("", 0.1f, Color.RED, Color.BLACK, 0.02f, true, false, new Vector(0.5f, -2.0f), 1.0f, 100.0f);
-		mainMsg.setParent(getOwner().getCanvas()); 
+		mainMsg = new TextGraphics("", 0.1f, Color.RED, Color.BLACK, 0.02f, true, false, new Vector(0.5f, -2.0f), 1.0f,
+				100.0f);
+		mainMsg.setParent(getOwner().getCanvas());
 		mainMsg.setRelativeTransform(Transform.I.translated(0.0f, -1.0f));
 
 		ContactListener listener = new ContactListener() {
@@ -75,9 +72,10 @@ public class Finish extends GameEntity implements Actor {
 		};
 		getEntity().addContactListener(listener);
 	}
-	
+
 	/**
 	 * Nous avons besoin de savoir si nous avons gagne ou pas dans BikeGame
+	 * 
 	 * @return une boolean, true = nous avons gagne
 	 */
 	public boolean getWin() {

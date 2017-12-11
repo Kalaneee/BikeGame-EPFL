@@ -11,8 +11,8 @@ import ch.epfl.cs107.play.math.Vector;
 
 public class Bascule extends Crate {
 	public Bascule(ActorGame game, boolean fixed, Vector position, float width, float height, String image,
-			Terrain terrain, float friction) {
-		super(game, fixed, position, width, height, image, friction);
+			Terrain terrain) {
+		super(game, fixed, position, width, height, image);
 		RevoluteConstraintBuilder revoluteConstraintBuilder = getOwner().getRevoluteConstraintBuilder();
 		revoluteConstraintBuilder.setFirstEntity(terrain.getEntity());
 		revoluteConstraintBuilder.setFirstAnchor(new Vector(position.getX() + width / 2, position.getY() + height / 2));

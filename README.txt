@@ -15,9 +15,13 @@ ________________________________❄_CONTRÔLES_❄_____________________________
 	DOWN:		Freiner
 	LEFT: 		Donner une force au Vélo vers la gauche
 	RIGHT:    	Donner une force au Vélo vers la droite
+	J: 		Sauter
 	SPACE:		Tourner le vélo
 	R:		Recommencer le niveau
+
 	P:		Mettre le jeu en Pause
+
+(Si en Pause) :
 	 T: 		Téléporte le vélo sur le curseur de la souris (debug)
 	 C: 		Fais apparaître une Caisse sur le curseur de la souris
 	 G: 		Entrer en edit-mod, les prochains clics de souris
@@ -31,9 +35,14 @@ ___________________________❄_CONSEILS_❄____________________________
   >  Nous appliquons des forces assez importantes avec les touches
      gauche et droite, utilisez-les à bon escient !
 
-  >  Attention au tremplin ! Un saut périlleux sera nécessaire 
-     avant l'atterrissage !
+  >  Attention au tremplin ! Une vitesse élevée sera nécessaire mais 
+     un saut périlleux sera indispensable avant l'atterrissage !
 
+  >  N’hésitez pas à utiliser le saut ! Cela pourrait vous être
+     nécessaires dans plusieurs situations.
+     
+  >  Pour faire tomber le mur plus facilement, penchez-vous en 
+     arrière et sautez juste avant l'impact !
 
 =================================================================
                     ENJOY & MERRY CHRISTMAS !                    
