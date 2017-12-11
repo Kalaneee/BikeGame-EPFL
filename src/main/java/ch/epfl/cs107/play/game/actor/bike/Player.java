@@ -34,57 +34,57 @@ public class Player {
 	private Polyline pLeg1;
 	private Polyline pLeg2;
 
+	protected static Color playerColor;
+
 	public Player(Color playerColor, Entity bike, boolean sensMarche) {
 		
-		try {
 			if (playerColor == null) {
 				throw new NullPointerException("Valeur indispensable !");
 			}
 			if (bike == null) {
 				throw new NullPointerException("Valeur indispensable !");
 			}
-		}
-		finally {
-		}
+		this.playerColor = playerColor;
 		
 		// Draw player head;
 		pHead = new Circle(0.2f, getHeadLocation());
-		imgHead = new ShapeGraphics(pHead, null, Color.RED, .1f, 1.f, 0);
+		imgHead = new ShapeGraphics(pHead, null, playerColor, .1f, 1.f, 0);
 		imgHead.setParent(bike);
 
 		// Draw player arm;
 		pArm = new Polyline(getShoulderLocation(), getHandLocation());
-		imgArm = new ShapeGraphics(pArm, Color.WHITE, Color.RED, .1f, 1.f, 0);
+		imgArm = new ShapeGraphics(pArm, null, playerColor, .1f, 1.f, 0);
 		imgArm.setParent(bike);
 
 		// Draw player body;
 		pBody = new Polyline(getShoulderLocation(), getHipLocation());
-		imgBody = new ShapeGraphics(pBody, Color.WHITE, Color.RED, .1f, 1.f, 0);
+		imgBody = new ShapeGraphics(pBody, null, playerColor, .1f, 1.f, 0);
 		imgBody.setParent(bike);
 
 		// Draw player thight1;
 		pThight1 = new Polyline(getHipLocation(), getKnee1Location());
-		imgThight1 = new ShapeGraphics(pThight1, Color.WHITE, Color.RED, .1f, 1.f, 0);
+		imgThight1 = new ShapeGraphics(pThight1, null, playerColor, .1f, 1.f, 0);
 		imgThight1.setParent(bike);
 
 		// Draw player thight2;
 		pThight2 = new Polyline(getHipLocation(), getKnee2Location());
-		imgThight2 = new ShapeGraphics(pThight2, Color.WHITE, Color.RED, .1f, 1.f, 0);
+		imgThight2 = new ShapeGraphics(pThight2, null, playerColor, .1f, 1.f, 0);
 		imgThight2.setParent(bike);
 
 		// Draw player leg1;
 		pLeg1 = new Polyline(getKnee1Location(), getFoot1Location());
-		imgLeg1 = new ShapeGraphics(pLeg1, Color.WHITE, Color.RED, .1f, 1.f, 0);
+		imgLeg1 = new ShapeGraphics(pLeg1, null, playerColor, .1f, 1.f, 0);
 		imgLeg1.setParent(bike);
 
 		// Draw player leg2;
 		pLeg2 = new Polyline(getKnee2Location(), getFoot2Location());
-		imgLeg2 = new ShapeGraphics(pLeg2, Color.WHITE, Color.RED, .1f, 1.f, 0);
+		imgLeg2 = new ShapeGraphics(pLeg2, null, playerColor, .1f, 1.f, 0);
 		imgLeg2.setParent(bike);
 
 	}
 
-	// Nous avons decider de draw le player ici et non pas dans ActorGame car selon nous, le Player n'est pas un 
+	// Nous avons decider de draw le player ici et non pas dans ActorGame car
+	// selon nous, le Player n'est pas un
 	// Actor a part entiere, seulement une image au-dessus de l'entity bike
 	protected void playerDraw(Canvas canvas) {
 		imgArm.draw(canvas);
@@ -96,9 +96,20 @@ public class Player {
 		imgLeg2.draw(canvas);
 	}
 
+	protected void changeColor(Color c) {
+		playerColor = c;
+		imgArm.setOutlineColor(c);
+		imgHead.setOutlineColor(c);
+		imgBody.setOutlineColor(c);
+		imgThight1.setOutlineColor(c);
+		imgThight2.setOutlineColor(c);
+		imgLeg1.setOutlineColor(c);
+		imgLeg2.setOutlineColor(c);
+	}
+
 	/**
-	 * Methode qui inverse la boolean indiquant la direction du velo et appelle la methode 
-	 *  pour le redessiner
+	 * Methode qui inverse la boolean indiquant la direction du velo et appelle
+	 * la methode pour le redessiner
 	 */
 	protected void TurnBike() {
 		if (!sensMarche) { // regarde a droite
@@ -112,7 +123,8 @@ public class Player {
 	}
 
 	/**
-	 * Methode permettant de redessiner le Player lorsque l'on change de direction
+	 * Methode permettant de redessiner le Player lorsque l'on change de
+	 * direction
 	 */
 	private void reDraw() {
 		imgArm.setShape(new Polyline(getShoulderLocation(), getHandLocation()));
@@ -124,8 +136,11 @@ public class Player {
 	}
 
 	/**
-	 * Methode affichant l'animation du bras qui monte puis descend lorsque l'on a reussi un niveau 
-	 * @param time : un timer qui s'incremente puis decremente
+	 * Methode affichant l'animation du bras qui monte puis descend lorsque l'on
+	 * a reussi un niveau
+	 * 
+	 * @param time
+	 *            : un timer qui s'incremente puis decremente
 	 */
 	protected void celebrate(float time) {
 		// Nous faisons ici une rotation du bras autour de l'epaule
@@ -134,7 +149,9 @@ public class Player {
 
 	/**
 	 * Methode qui redefinit les cuisses/jambes du cycliste lors du pedalement
-	 * @param position : la position angulaire de la roue
+	 * 
+	 * @param position
+	 *            : la position angulaire de la roue
 	 */
 	protected void pedale(float position) {
 		Vector posKnee1 = getKnee1Location(position);
@@ -153,7 +170,8 @@ public class Player {
 	 * regarde a droite, les coordonées en abcisse sont conservees, s'il regarde
 	 * a gauche elles sont inversees.
 	 * 
-	 * @param x: un float, la position en x.
+	 * @param x:
+	 *            un float, la position en x.
 	 * @return : un float, la nouvelle position selon la direction du cycliste.
 	 */
 	public float Direction(float x) {
@@ -165,9 +183,12 @@ public class Player {
 	}
 
 	/**
-	 * Les methodes qui suivent sont des getters des positions necessaires pour dessiner le player
-	 * @return un Vector, la position de la tete ou du genou par ex, cette valeur sera multipliée par
-	 *         (-1) si le cycliste regarde vers la gauche.
+	 * Les methodes qui suivent sont des getters des positions necessaires pour
+	 * dessiner le player
+	 * 
+	 * @return un Vector, la position de la tete ou du genou par ex, cette
+	 *         valeur sera multipliée par (-1) si le cycliste regarde vers la
+	 *         gauche.
 	 */
 	public Vector getHeadLocation() {
 		return new Vector(Direction(0.0f), 1.75f);
@@ -191,13 +212,16 @@ public class Player {
 
 	/**
 	 * Nous avons surcharge certains getters pour l'animation du pedalement
-	 * @param pos : la position angulaire de la roue
+	 * 
+	 * @param pos
+	 *            : la position angulaire de la roue
 	 * @return un Vector, la nouvelle position du genou, du pieds etc
 	 */
 	public Vector getKnee1Location(float pos) {
-		// Les valeurs des getters pour le pedalement ont ete trouvees en 
+		// Les valeurs des getters pour le pedalement ont ete trouvees en
 		// tatonnant et en utilisant la trigonometrie
-		// le 1er nombre represente le centre de la rotation et le second divise par 6 
+		// le 1er nombre represente le centre de la rotation et le second divise
+		// par 6
 		// represente la "longueur du rayon" de cette rotation
 		float x = (float) (0.2 + Math.cos(pos) / 6);
 		float y = (float) (0.5 + Math.sin(pos) / 6);

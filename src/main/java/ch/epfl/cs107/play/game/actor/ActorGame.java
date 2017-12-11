@@ -43,6 +43,8 @@ public abstract class ActorGame implements Game {
 	private boolean enPause;
 	// boolean pour savoir si nous sommes en train de dessiner un polyline dans le mode pause
 	private boolean isDrawing;
+	// boolean pour savoir si le joueur est en train de modifier la couleur du cycliste
+	private boolean choosingColor;
 	// Une ArrayList de Vector qui represente les points du polyline que nous dessinons,
 	// chaque position de points est saisie sur la position de la souris lors
 	// du click en "edit-mod" (isDrawing = true).
@@ -50,6 +52,24 @@ public abstract class ActorGame implements Game {
 	// Ce polyline est le polyline constitué des points de l'array ci-dessus
 	private Polyline formeTerrain;
 	TextGraphics editMsg;
+	// Pour avoir acces au Bike dans ActorGame
+	private Actor payLoad;
+	
+	/**
+	 * Methode pour definir le payLoad
+	 * @param a : un Actor, dans notre cas le Bike lors de sa creation
+	 */
+	public void setPayLoad(Actor a) {
+		payLoad = a;
+	}
+	
+	/**
+	 * Methode qui donne acces au Bike, personnage principal de notre jeu
+	 * @return : le payLoad, un Actor, dans notre cas le Bike
+	 */
+	public Actor getPayLoad() {
+		return payLoad;
+	}
 
 	/**
 	 * Methode pour pouvoir interagir avec le clavier dans differentes classes : Bike, BikeGame, ActorGame,...
@@ -165,14 +185,37 @@ public abstract class ActorGame implements Game {
 			pauseMsg.draw(window);
 			// Nous utilisons la touche T pour nous teleporter pour debug notre niveau
 			if (getKeyboard().get(KeyEvent.VK_T).isReleased() && !isDrawing) {
-				// Nous parcourons la liste d'acteurs pour trouver le bike
-				for (Actor a : listActor) {
-					if ((a instanceof Bike)) {
-						// Nous changeons la position du bike et des roues
-						((Bike) a).setPosition(getMouse().getPosition());
-					}
+				// Nous changeons la position du bike et des roues
+				((Bike) payLoad).setPosition(getMouse().getPosition());
+			}
+			// E = Ouvrir le menu pour changer de couleur le cyliste
+			if (getKeyboard().get(KeyEvent.VK_E).isReleased() && !isDrawing) {
+				choosingColor = !choosingColor;
+			}
+			// Si nous sommes en train de changer de couleur
+			if (choosingColor) {
+				ImageGraphics chooseColor = new ImageGraphics("ChooseColorBikeGame.png", 2.f, 1.33f, new Vector(0.752f, 0.5f), 1,
+						1000f); 
+				chooseColor.setParent(window);
+				chooseColor.draw(getCanvas());
+				if (getKeyboard().get(KeyEvent.VK_R).isReleased()) {
+					((Bike) payLoad).createPlayer(Color.RED);
+					choosingColor = !choosingColor;
+				}
+				else if (getKeyboard().get(KeyEvent.VK_V).isReleased()) {
+					((Bike) payLoad).createPlayer(Color.GREEN);
+					choosingColor = !choosingColor;
+				}
+				else if (getKeyboard().get(KeyEvent.VK_B).isReleased()) {
+					((Bike) payLoad).createPlayer(Color.BLUE);
+					choosingColor = !choosingColor;
+				}
+				else if (getKeyboard().get(KeyEvent.VK_J).isReleased()) {
+					((Bike) payLoad).createPlayer(Color.YELLOW);
+					choosingColor = !choosingColor;
 				}
 			}
+			
 			// 4 conditions pour deplacer la camera si nous sommes en Pause
 			if (getKeyboard().get(KeyEvent.VK_RIGHT).isDown() && !isDrawing) {
 				shiftedViewCenter = shiftedViewCenter.add((new Vector(0.4f, 0.0f)));

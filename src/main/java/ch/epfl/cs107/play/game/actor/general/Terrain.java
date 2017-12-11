@@ -83,8 +83,7 @@ public class Terrain extends GameEntity implements Actor {
 	}
 
 	// Nous avons besoin de getEntity le terrain pour la Bascule, c'est pour
-	// cela
-	// que nous l'avons redefinie ici
+	// cela que nous l'avons redefinie ici
 	protected Entity getEntity() {
 		return super.getEntity();
 	}

@@ -1,0 +1,51 @@
+CONCEPTION:
+
+Afin de réaliser notre Bike Game, nous avons décidé de reprendre le schéma de conception proposé.
+Nous avons uniquement modifié la couleur d'arrière-plan dans src/main/java/ch/epfl/cs107/play/window/swing/SwingWindow.java
+Notre architecture se base donc sur les trois classes Actor, ActorGame et GameEntity situées dans le répertoire
+actor. 
+De plus, par souci de bonne encapsulation, nous nous sommes efforcés de déclarer les variables d'instances
+en private et les méthodes en private/protected dans la mesure du possible.
+
+*Classes :
+- general
+Les classes suivantes se trouvent dans le dossier general/ :
+
+> Crate, un bloc, pouvant prendre l'apparence d'une caisse en bois, d'un bloc de pierre, d'une plateforme ou d'un mur par exemple.
+> Bascule, hérite de crate, bloc pouvant pivoter quand le cycliste la touche.
+> Pendule, hérite de wheel, un pendule, composé d'un boulet et d'un bloc fixe reliés par une corde. Ainsi le boulet peut osciller.
+> Terrain, une polyline sur lequel le cycliste roule pendant le jeu. 
+> Tremplin, un tremplin qui expulse le cycliste lorsqu'il entre en contact avec celui-ci.
+
+
+- bike
+Les classes suivantes se trouvent dans le dossier bike/ :
+
+> Bike, un vélo, acteur principal du jeu BikeGame. Composé de deux roues et d'un player, pouvant se déplacer, freiner, se retourner, sauter. 
+> BikeGame, le corps du jeu à proprement parlé. Réunit tous les acteurs évoluant dans celui-ci. Instance de Game. 
+> Finish, un drapeau qui représente la ligne d'arrivée dans un niveau. Théoriquement, lorsque le joueur touche le drapeau le niveau est gagné (et on passe au niveau suivant). 
+> Player, classe représentant le personnage assis sur le vélo. Il pédale quand il avance et lève les bras lorsque le niveau est gagné.
+> Wheel, une roue qui peut être attaché à un autre objet (bike, pendule) et pouvant tourner.
+
+
+*Extensions:
+> Editions de niveaux : pendant le menu pause, possibilité de créer des crates ou des terrains en cliquant avec la souris.
+> Fumée : poussière soulevée lorsque le cycliste freine jusqu'à une certaine vitesse.
+> Nouveaux acteurs : bascules, tremplins et pendules.
+> Animation du cycliste : pédale, lève les bras en signe de victoire.
+> Terrain glissant : friction différente qui fait glisser le cycliste quand il roule dessus (dans BikeGame).
+> Petits ajouts divers : possibilité de se téléporter en mode pause pour débug et affichage du nombre de morts.
+
+*Remarques:
+> Nous avons remarqué que les textes du menu Pause ne s'affichaient pas dans le background dessiné sous PC, 
+  (problème de dimensions de fenêtre ?) voici donc une image de ce que cela rend sur Mac : http://prntscr.com/hlx3cb
+
+
+
+
+
+
+ 
+
+
+

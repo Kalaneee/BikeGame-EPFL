@@ -21,9 +21,9 @@ public class CrateGame extends ActorGame {
 	
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);
-		c1 = new Crate(this, fixed, pos1, 1, 1, "stone.broken.4.png", friction);
-		c2 = new Crate(this, fixed, pos2, 1, 1,"stone.broken.1.png", friction);
-		c3 = new Crate(this, fixed, pos3, 1, 1, "stone.broken.2.png", friction);
+		c1 = new Crate(this, fixed, pos1, 1, 1, "stone.broken.4.png");
+		c2 = new Crate(this, fixed, pos2, 1, 1,"stone.broken.1.png");
+		c3 = new Crate(this, fixed, pos3, 1, 1, "stone.broken.2.png");
 		return true;
 	}
 	

@@ -26,6 +26,7 @@ public class Wheel extends GameEntity implements Actor {
 	private ShapeGraphics imgLine;
 	private final float MAX_WHEEL_SPEED = 20.f;
 	private boolean ligne;
+	private boolean isAttached = false;
 
 	public Wheel(ActorGame game, boolean fixed, Vector position, float rayon, Color colorInt, Color colorExt, boolean ligne) {
 		super(game, fixed, position);
@@ -44,8 +45,9 @@ public class Wheel extends GameEntity implements Actor {
 		if (colorExt == null) {
 			throw new NullPointerException();
 		}
-		
 		this.ligne = ligne;
+		// la roue existe
+		isAttached = true;
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		Circle circle = new Circle(rayon);
 		partBuilder.setShape(circle);
@@ -78,8 +80,16 @@ public class Wheel extends GameEntity implements Actor {
 	}
 	
 	// Nous utilisons cette methode dans ActorGame, pour teleporter le velo
-	public Entity getEntity2() {
+	public Entity getWheel() {
 		return this.getEntity();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected boolean wheelAttach() {
+		return isAttached;
 	}
 	
 	/**
@@ -125,6 +135,8 @@ public class Wheel extends GameEntity implements Actor {
 	// Methode pour supprimer l'attache entre le bike et la roue
 	protected void detach() {
 		constraint.destroy();
+		// la roue n'existe plus
+		isAttached = false;
 	}
 	
 	// Nous avons besoin de la position angulaiire pour l'animation de pedalement

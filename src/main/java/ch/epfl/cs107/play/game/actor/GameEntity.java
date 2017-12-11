@@ -45,11 +45,11 @@ public abstract class GameEntity implements Actor{
 	}
 	
 	protected Entity getEntity() {
-		return this.body;
+		return body;
 	}
 	
 	protected ActorGame getOwner() {
-		return this.game;
+		return game;
 	}
 	
 	/**

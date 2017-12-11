@@ -13,6 +13,8 @@ import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.actor.crate.Crate;
 import ch.epfl.cs107.play.game.actor.general.Bascule;
 import ch.epfl.cs107.play.game.actor.general.Pendule;
+import ch.epfl.cs107.play.game.actor.general.Piques;
+import ch.epfl.cs107.play.game.actor.general.Piques2;
 import ch.epfl.cs107.play.game.actor.general.Terrain;
 import ch.epfl.cs107.play.game.actor.general.Tremplin;
 import ch.epfl.cs107.play.io.FileSystem;
@@ -54,18 +56,18 @@ public class BikeGame extends ActorGame {
 			165.0f, -21.0f,
 			170.0f, -35.0f,
 			175.0f, -20.0f,
-			225.0f, -20.0f,
-			225.0f, -22.0f,
-			235.0f, -22.0f,
-			238.0f, -20.0f,
-			241.0f, -20.0f,
-			241.0f, -25.0f,
-			248.0f, -25.0f,
-			248.0f, -20.0f,
-			260.0f, -20.0f,
-			260.0f, 0.0f,
+			245.0f, -20.0f,
+			245.0f, -22.0f,
+			255.0f, -22.0f,
+			258.0f, -20.0f,
+			261.0f, -20.0f,
+			261.0f, -25.0f,
+			268.0f, -25.0f,
+			268.0f, -20.0f,
+			280.0f, -20.0f,
 			280.0f, 0.0f,
-			280.0f, -1000.0f);
+			300.0f, 0.0f,
+			300.0f, -1000.0f);
 	// Nous mettons une friction nulle au terrain car le PartBuilder
 	// ne l'utilisera pas. Il applique une friction au terrain
 	// seulement si le terrain est glissant
@@ -98,8 +100,9 @@ public class BikeGame extends ActorGame {
 			new Vector(-204.0f, 20.0f),
 			new Vector(-212.0f, 20.0f),
 			new Vector(-221.0f, 20.0f),
-			new Vector(-243.0f, 25.0f),
-			new Vector(-251.0f, 20.0f),
+			new Vector(-242.0f, 20.0f),
+			new Vector(-263.0f, 25.0f),
+			new Vector(-271.0f, 20.0f),
 	};
 	
 	private Crate c1;
@@ -127,7 +130,7 @@ public class BikeGame extends ActorGame {
 	private Vector posPlateforme2= new Vector(133f, -18.0f);
 	
 	private Crate mur1;
-	private Vector posMur1 = new Vector(238.0f, -20.0f);
+	private Vector posMur1 = new Vector(258.0f, -20.0f);
 	
 	private Polygon polyBike = new Polygon (
 			0.0f, 0.5f,
@@ -142,14 +145,14 @@ public class BikeGame extends ActorGame {
 	
 	private Finish flag;
 	private float rayonFlag = 0.5f;
-	private Vector posFlag = new Vector(255.0f, -19.5f);
+	private Vector posFlag = new Vector(275.0f, -19.5f);
 	
 	private Pendule pendule1;
 	private Pendule pendule2;
 	private Pendule pendule3;
 	private Vector posPendule1 = new Vector(20.0f, -2.5f);
-	private Vector posPendule2 = new Vector(195.0f, -15.5f);
-	private Vector posPendule3 = new Vector(210.0f, -15.5f);
+	private Vector posPendule2 = new Vector(205.0f, -15.5f);
+	private Vector posPendule3 = new Vector(230.0f, -15.5f);
 	
 	private Bascule bascule1;
 	private Vector posBascule1 = new Vector(46.0f, -0.25f);
@@ -160,6 +163,9 @@ public class BikeGame extends ActorGame {
 	
 	private Tremplin tremplin1;
 	private Vector posTremplin1 = new Vector(163.0f, -21f);
+	
+	private Piques2 piques1;
+	private Vector posPiques1 = new Vector(220.0f, -20.0f);
 	
 	private TextGraphics msgDeath;
 	private int nbDeaths = 0;
@@ -174,7 +180,7 @@ public class BikeGame extends ActorGame {
 
 		terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, new Color(139, 69, 19), new Color(0, 128, 0),
 				0.15f, bushPos, false, frictionTerrain);
-		terrainGlissant = new Terrain(this, true, new Vector(225.0f, -22.0f), formeTerrainGlissant, new Color(127, 140, 141),
+		terrainGlissant = new Terrain(this, true, new Vector(245.0f, -22.0f), formeTerrainGlissant, new Color(127, 140, 141),
 				new Color(66, 66, 66), 0.0f, null, true, frictionGlissant);
 
 		c1 = new Crate(this, fixed, posCrate1, 1, 1, "stone.broken.4.png");
@@ -203,6 +209,8 @@ public class BikeGame extends ActorGame {
 		bike = new Bike(this, fixed, posBike, polyBike, RAYON_ROUES);
 		
 		tremplin1 = new Tremplin(this, true, posTremplin1, 2.0f, 1.0f, "jumper.normal.png");
+		
+		piques1 = new Piques2(this, true, posPiques1, 3.0f, 1.0f, "spikes.png");
 		
 		// Nous fixons la camera sur le bike
 		setViewCandidate(bike);
@@ -235,6 +243,7 @@ public class BikeGame extends ActorGame {
 			}
 		// Nous lancons l'animation et rendons invincible le bike en cas de victoire
 		if (flag.getWin()) {
+			// Nous le mettons ici a -1 pour qu'il soit a 0 lors du reset
 			nbDeaths = -1;
 			bike.celebration();
 			bike.deleteListener();

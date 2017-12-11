@@ -39,6 +39,10 @@ public class Bike extends GameEntity implements Actor {
 	private float animBras = 0;
 	private float animBras2 = 150;
 	private ContactListener listener;
+	// Nous devons la mettre en static pour que la couleur reste la 
+	// meme lors du reset et donc de la creation d'un nouveau bike, donc 
+	// d'un nouveau player
+	private static Color colorPlayer;
 
 	public Bike(ActorGame game, boolean fixed, Vector position, Polygon polygon, float rayon) {
 		super(game, fixed, position);
@@ -61,9 +65,9 @@ public class Bike extends GameEntity implements Actor {
 		partBuilder.setShape(polygon);
 		partBuilder.setGhost(true);
 		partBuilder.build();
-
 		// Nous creeons ici un player qui est un ensemble de polyline
-		player = new Player(Color.RED, getEntity(), bikeLook);
+		// La couleur par default est le rouge
+		player = new Player(colorPlayer == null ? Color.RED : colorPlayer, getEntity(), bikeLook);
 		getOwner().addActor(this);
 		// Nous creeons les 2 roues du bike, une decalee de 1 a gauche et
 		// l'autre de 1 a droite
@@ -103,9 +107,13 @@ public class Bike extends GameEntity implements Actor {
 				if (contact.getOther().isGhost()) {
 					return;
 				}
-				// si contact avec les roues, nous ne les comptons pas :
-				if (other == roueGauche.getParts().get(0) || other == roueDroite.getParts().get(0)) {
-					return;
+				// Nous testons d'abord si les roues sont attachees au velo, elles peuvent 
+				// par exemple avoir ete detach ()
+				if (roueDroite.wheelAttach() && roueGauche.wheelAttach()) {
+					// si contact avec les roues, nous ne les comptons pas :
+					if (other == roueGauche.getParts().get(0) || other == roueDroite.getParts().get(0)) {
+						return;
+					}
 				}
 				// autrement il y a collision
 				hit = true;
@@ -116,6 +124,7 @@ public class Bike extends GameEntity implements Actor {
 			}
 		};
 		getEntity().addContactListener(listener);
+		getOwner().setPayLoad(this);
 	}
 
 	/**
@@ -129,13 +138,17 @@ public class Bike extends GameEntity implements Actor {
 	 * Methode pour definir la position du bike et de ses 2 roues, nous
 	 * utilisons cette methode lors de la teleportation
 	 * 
-	 * @param pos
-	 *            : un Vector, la nouvelle position du bike
+	 * @param pos : un Vector, la nouvelle position du bike
 	 */
 	public void setPosition(Vector pos) {
 		getEntity().setPosition(pos);
-		roueDroite.getEntity2().setPosition(new Vector(pos.getX() + 1, pos.getY()));
-		roueGauche.getEntity2().setPosition(new Vector(pos.getX() - 1, pos.getY()));
+		roueDroite.getWheel().setPosition(new Vector(pos.getX() + 1, pos.getY()));
+		roueGauche.getWheel().setPosition(new Vector(pos.getX() - 1, pos.getY()));
+	}
+	
+	public void createPlayer(Color c) {
+		colorPlayer = c;
+		player = new Player(c, getEntity(), bikeLook);
 	}
 
 	@Override
@@ -181,9 +194,6 @@ public class Bike extends GameEntity implements Actor {
 		return hit;
 	}
 
-	// Methode pour faire monter le bras puis apres 150 update il fait descendre
-	// le bras
-	// a la position initiale
 	/**
 	 * Methode pour faire monter le bras puis apres 150 update il fait descendre
 	 * le bras a la position initiale
