@@ -1,5 +1,5 @@
 /*
- *	Author:      Valentin Kaelin
+ *	Authors:      Valentin Kaelin - Giulia Murgia
  *	Date:        12 déc. 2017
  */
 package ch.epfl.cs107.play.game.actor.general;
@@ -28,6 +28,7 @@ public class Accelerateur extends GameEntity implements Actor {
 		Polygon polygon = new Polygon(Vector.ZERO, new Vector(width, 0.0f), new Vector(width, height),
 				new Vector(0.0f, height));
 		partBuilder.setShape(polygon);
+		// Pour ne pas entrer en collision avec
 		partBuilder.setGhost(true);
 		partBuilder.build();
 
@@ -41,8 +42,8 @@ public class Accelerateur extends GameEntity implements Actor {
 				Part other = contact.getOther();
 				// Nous mettons cette condition pour que l'accelerateur ne
 				// fonctionne que dans un sens (de gauche à droite).
-
 				if (other.getEntity().getAngularVelocity() < 0) {
+					// nous multiplions sa vitesse angulaire par 3
 					other.getEntity().setAngularVelocity((float) (3.0 * other.getEntity().getAngularVelocity()));
 				}
 			}
@@ -56,14 +57,12 @@ public class Accelerateur extends GameEntity implements Actor {
 
 	@Override
 	public Transform getTransform() {
-		// TODO Auto-generated method stub
-		return null;
+		return getEntity().getTransform();
 	}
 
 	@Override
 	public Vector getVelocity() {
-		// TODO Auto-generated method stub
-		return null;
+		return getEntity().getVelocity();
 	}
 
 	@Override

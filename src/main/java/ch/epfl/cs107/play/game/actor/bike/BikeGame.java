@@ -112,6 +112,16 @@ public class BikeGame extends ActorGame {
 			new Vector(-242.0f, 20.0f),
 			new Vector(-263.0f, 25.0f),
 			new Vector(-271.0f, 20.0f),
+			new Vector(-290.0f, 20.0f),
+			new Vector(-306.0f, 30.0f),
+			new Vector(-312.0f, 30.0f),
+			new Vector(-336.0f, 30.0f),
+			new Vector(-349.0f, 20.0f),
+			new Vector(-355.0f, 20.0f),
+			new Vector(-372.0f, 20.0f),
+			new Vector(-377.0f, 20.0f),
+			new Vector(-396.0f, 0.0f),
+			new Vector(-410.0f, 0.0f),
 	};
 	
 	private Crate c1;
@@ -149,8 +159,7 @@ public class BikeGame extends ActorGame {
 	private Bike bike;
 	// Nous mettons le rayon des roues en final car celui-ci ne change pas
 	private final float RAYON_ROUES = 0.5f;
-	//private Vector posBike = new Vector(2.0f, 5.0f);
-	private Vector posBike = new Vector(210.0f, -20.0f);
+	private Vector posBike = new Vector(2.0f, 5.0f);
 	
 	private Finish flag;
 	private float rayonFlag = 0.5f;
@@ -173,11 +182,11 @@ public class BikeGame extends ActorGame {
 	private Tremplin tremplin1;
 	private Vector posTremplin1 = new Vector(163.0f, -21f);
 	
-	private Ascenseur ascenseur1;
-	private Vector posAscenseur1 = new Vector(385.0f, -20.0f);
-	
 	private Accelerateur accelerateur1;
 	private Vector posAccelerateur1 = new Vector(295.0f, -20.0f);
+	
+	private Ascenseur ascenseur1;
+	private Vector posAscenseur1 = new Vector(385.0f, -20.0f);
 	
 	private TextGraphics msgDeath;
 	private int nbDeaths = 0;
@@ -222,16 +231,16 @@ public class BikeGame extends ActorGame {
 		
 		tremplin1 = new Tremplin(this, true, posTremplin1, 2.0f, 1.0f, "jumper.normal.png");
 		
-		ascenseur1 = new Ascenseur(this, true, posAscenseur1, 5.0f, 0.5f, "wood.3.png", 25.0f, 500.0f, 0.01f);
-		
 		accelerateur1 = new Accelerateur(this, true, posAccelerateur1, 3, 1, "Accelerateur.png");
+		
+		ascenseur1 = new Ascenseur(this, true, posAscenseur1, 5.0f, 0.5f, "glass.cracked.3.png", 23.0f, 500.0f, 0.02f);
 		
 		// Nous fixons la camera sur le bike
 		setViewCandidate(bike);
 		
 		flag = new Finish(this, true, posFlag, rayonFlag, "flag.red.png");
 		
-		msgDeath = new TextGraphics("", 0.05f, Color.RED, Color.RED, 0.08f, true, false, new Vector(-1.2f, -8.0f), 1.0f,
+		msgDeath = new TextGraphics("", 0.05f, Color.BLACK, Color.BLACK, 0.08f, true, false, new Vector(-1.2f, -8.0f), 1.0f,
 				100.0f);
 		msgDeath.setText("DEATHS-" + nbDeaths);
 		msgDeath.setParent(window);

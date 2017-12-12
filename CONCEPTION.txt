@@ -49,13 +49,4 @@ Les classes suivantes se trouvent dans le dossier bike/ :
 > Nous avons volontairement réalisé la conception du niveau pour que celui-ci soit compliqué à réussir (sans utiliser
   de téléportation ou de création de Polyline bien sûr). Nous avions en tête le jeu flash Mario-Moto comme 
   inspiration : http://jeu.info/super-mario-moto.html
-
-
-
-
-
-
- 
-
-
-
+  

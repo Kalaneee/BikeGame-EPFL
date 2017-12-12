@@ -3,13 +3,13 @@
 ===================================================================
 
 
-__________________________❄_COMMENT_LANCER_LE_JEU_❄__________________________
+_________________________❄_COMMENT_LANCER_LE_JEU_❄_________________________
 
 	Pour lancer le jeu, il faut tout d'abord ajouter la librairie jbox2d
 	et lancer la classe src/main/java/ch/epfl/cs107/play/Program.java
 
 
-_________________________________❄_CONTRÔLES_❄_________________________________
+_______________________________❄_CONTRÔLES_❄_______________________________
 
 	UP:		Avancer
 	DOWN:		Freiner
@@ -31,8 +31,7 @@ _________________________________❄_CONTRÔLES_❄_____________________________
 	 			proposées : V/B/X/D/W/G/Y
 
 
-
-___________________________❄_CONSEILS_❄____________________________
+____________________________❄_CONSEILS_❄_____________________________
 
   >  Nous appliquons des forces assez importantes avec les touches
      gauche et droite, utilisez-les à bon escient !
@@ -46,7 +45,10 @@ ___________________________❄_CONSEILS_❄____________________________
   >  Pour faire tomber le mur plus facilement, penchez-vous en 
      arrière et sautez juste avant l'impact !
      
-___________________________❄_IMAGES_❄____________________________
+  >  Utilisez le frein pour rester plus facilement en équilibre
+     sur l'ascenseur !    
+     
+____________________________❄_IMAGES_❄_____________________________
 
   >  "ChooseColorBikeGame.png", celle-ci a été entièrement
    	 réalisée par notre groupe avec Photoshop.

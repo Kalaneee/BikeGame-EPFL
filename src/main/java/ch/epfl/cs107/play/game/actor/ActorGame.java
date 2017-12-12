@@ -62,14 +62,6 @@ public abstract class ActorGame implements Game {
 	public void setPayLoad(Actor a) {
 		payLoad = a;
 	}
-	
-	/**
-	 * Methode qui donne acces au Bike, personnage principal de notre jeu
-	 * @return : le payLoad, un Actor, dans notre cas le Bike
-	 */
-	public Actor getPayLoad() {
-		return payLoad;
-	}
 
 	/**
 	 * Methode pour pouvoir interagir avec le clavier dans differentes classes : Bike, BikeGame, ActorGame,...
