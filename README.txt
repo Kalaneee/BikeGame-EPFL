@@ -1,5 +1,5 @@
 ===================================================================
-   THE BIKEGAME, par Giulia Murgia & Valentin Kälin
+   		THE BIKEGAME, par Giulia Murgia & Valentin Kälin
 ===================================================================
 
 
@@ -9,7 +9,7 @@ __________________________❄_COMMENT_LANCER_LE_JEU_❄_________________________
 	et lancer la classe src/main/java/ch/epfl/cs107/play/Program.java
 
 
-________________________________❄_CONTRÔLES_❄_________________________________
+_________________________________❄_CONTRÔLES_❄_________________________________
 
 	UP:		Avancer
 	DOWN:		Freiner
@@ -18,7 +18,6 @@ ________________________________❄_CONTRÔLES_❄_____________________________
 	J: 		Sauter
 	SPACE:		Tourner le vélo
 	R:		Recommencer le niveau
-
 	P:		Mettre le jeu en Pause
 
 (Si en Pause) :
@@ -29,7 +28,7 @@ ________________________________❄_CONTRÔLES_❄_____________________________
 	 U: 		Quitter l'edit-mod, dessine le Polyline
 	 E: 		Ouvrir le menu pour modifier la couleur du cyliste.
 	 			Ensuite, choisir une couleur avec les touches du claviers 
-	 			proposées : V/B/R/D/W/G/Y
+	 			proposées : V/B/X/D/W/G/Y
 
 
 
@@ -46,6 +45,17 @@ ___________________________❄_CONSEILS_❄____________________________
      
   >  Pour faire tomber le mur plus facilement, penchez-vous en 
      arrière et sautez juste avant l'impact !
+     
+___________________________❄_IMAGES_❄____________________________
+
+  >  "ChooseColorBikeGame.png", celle-ci a été entièrement
+   	 réalisée par notre groupe avec Photoshop.
+
+  >  "Accelerateur.png", basée sur l'image "arrow.red.png"  	 
+   	 
+   	 
+   	 Les image apparaissent pourtant seulement si nous les mettons
+   	 également dans le dossier bin/ (donc hors du dossier src/).   
 
 =================================================================
                     ENJOY & MERRY CHRISTMAS !                    

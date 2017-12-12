@@ -5,7 +5,7 @@
 package ch.epfl.cs107.play.game.actor.general;
 
 import ch.epfl.cs107.play.game.actor.ActorGame;
-import ch.epfl.cs107.play.game.actor.crate.Crate;
+import ch.epfl.cs107.play.game.actor.general.Crate;
 import ch.epfl.cs107.play.math.RevoluteConstraintBuilder;
 import ch.epfl.cs107.play.math.Vector;
 

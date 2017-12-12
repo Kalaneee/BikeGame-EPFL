@@ -11,11 +11,13 @@ en private et les méthodes en private/protected dans la mesure du possible.
 - general
 Les classes suivantes se trouvent dans le dossier general/ :
 
-> Crate, un bloc, pouvant prendre l'apparence d'une caisse en bois, d'un bloc de pierre, d'une plateforme ou d'un mur par exemple.
+> Crate, un bloc, pouvant prendre l'apparence d'un bloc de pierre, d'une plateforme ou d'un mur par exemple.
 > Bascule, hérite de crate, bloc pouvant pivoter quand le cycliste la touche.
-> Pendule, hérite de wheel, un pendule, composé d'un boulet et d'un bloc fixe reliés par une corde. Ainsi le boulet peut osciller.
+> Pendule, hérite de wheel, un pendule, composé d'un boulet et d'un bloc fixe (crate) reliés par une corde. Ainsi le boulet peut osciller.
 > Terrain, une polyline sur lequel le cycliste roule pendant le jeu. 
 > Tremplin, un tremplin qui expulse le cycliste lorsqu'il entre en contact avec celui-ci.
+> Accelerateur, un objet qui multiplie la vitesse angulaire des éléments qui entrent en contact avec.
+> Ascenseur, une plateforme qui monte et descend sur uen certaine hauteur
 
 
 - bike
@@ -30,15 +32,23 @@ Les classes suivantes se trouvent dans le dossier bike/ :
 
 *Extensions:
 > Editions de niveaux : pendant le menu pause, possibilité de créer des crates ou des terrains en cliquant avec la souris.
+> Possibilité de changer la couleur du cyliste dans le mode pause.
 > Fumée : poussière soulevée lorsque le cycliste freine jusqu'à une certaine vitesse.
-> Nouveaux acteurs : bascules, tremplins et pendules.
+> Nouveaux acteurs : bascules, tremplins, pendules, accélérateurs et ascenseurs.
 > Animation du cycliste : pédale, lève les bras en signe de victoire.
 > Terrain glissant : friction différente qui fait glisser le cycliste quand il roule dessus (dans BikeGame).
-> Petits ajouts divers : possibilité de se téléporter en mode pause pour débug et affichage du nombre de morts.
+> Petits ajouts divers : possibilité de se téléporter en mode pause pour débug, affichage du nombre de morts et ajouts de petits buissons sur le terrain.
 
 *Remarques:
 > Nous avons remarqué que les textes du menu Pause ne s'affichaient pas dans le background dessiné sous PC, 
   (problème de dimensions de fenêtre ?) voici donc une image de ce que cela rend sur Mac : http://prntscr.com/hlx3cb
+  
+> Nous avons pris la liberté de "draw" le Player dans sa classe et non pas dans ActorGame car nous trouvons qu'il ne
+  s'agit pas d'un acteur mais seulement d'une image, comme pour un TextGraphics par exemple.
+  
+> Nous avons volontairement réalisé la conception du niveau pour que celui-ci soit compliqué à réussir (sans utiliser
+  de téléportation ou de création de Polyline bien sûr). Nous avions en tête le jeu flash Mario-Moto comme 
+  inspiration : http://jeu.info/super-mario-moto.html
 
 
 

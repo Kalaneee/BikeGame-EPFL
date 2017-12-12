@@ -34,8 +34,6 @@ public class Player {
 	private Polyline pLeg1;
 	private Polyline pLeg2;
 
-	protected static Color playerColor;
-
 	public Player(Color playerColor, Entity bike, boolean sensMarche) {
 		
 			if (playerColor == null) {
@@ -44,7 +42,6 @@ public class Player {
 			if (bike == null) {
 				throw new NullPointerException("Valeur indispensable !");
 			}
-		this.playerColor = playerColor;
 		
 		// Draw player head;
 		pHead = new Circle(0.2f, getHeadLocation());
@@ -94,17 +91,6 @@ public class Player {
 		imgThight2.draw(canvas);
 		imgLeg1.draw(canvas);
 		imgLeg2.draw(canvas);
-	}
-
-	protected void changeColor(Color c) {
-		playerColor = c;
-		imgArm.setOutlineColor(c);
-		imgHead.setOutlineColor(c);
-		imgBody.setOutlineColor(c);
-		imgThight1.setOutlineColor(c);
-		imgThight2.setOutlineColor(c);
-		imgLeg1.setOutlineColor(c);
-		imgLeg2.setOutlineColor(c);
 	}
 
 	/**

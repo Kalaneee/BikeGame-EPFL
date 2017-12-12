@@ -1,6 +1,6 @@
 /*
  *	Author:      Valentin Kaelin
- *	Date:        11 déc. 2017
+ *	Date:        12 déc. 2017
  */
 package ch.epfl.cs107.play.game.actor.general;
 
@@ -17,29 +17,34 @@ import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Piques2 extends GameEntity implements Actor {
-	private ImageGraphics graphic;
+public class Accelerateur extends GameEntity implements Actor {
 	private ContactListener listener;
+	private ImageGraphics graphic;
 
-	public Piques2(ActorGame game, boolean fixed, Vector position,  float width, float height, String image) {
+	public Accelerateur(ActorGame game, boolean fixed, Vector position, float width, float height, String image) {
 		super(game, fixed, position);
-		
 
 		PartBuilder partBuilder = getEntity().createPartBuilder();
 		Polygon polygon = new Polygon(Vector.ZERO, new Vector(width, 0.0f), new Vector(width, height),
 				new Vector(0.0f, height));
 		partBuilder.setShape(polygon);
+		partBuilder.setGhost(true);
 		partBuilder.build();
+
 		graphic = new ImageGraphics(image, width, height);
 		graphic.setParent(getEntity());
 		getOwner().addActor(this);
-		
+
 		listener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
 				Part other = contact.getOther();
-				System.out.println(other.getEntity());
-				other.getEntity().destroy();
+				// Nous mettons cette condition pour que l'accelerateur ne
+				// fonctionne que dans un sens (de gauche à droite).
+
+				if (other.getEntity().getAngularVelocity() < 0) {
+					other.getEntity().setAngularVelocity((float) (3.0 * other.getEntity().getAngularVelocity()));
+				}
 			}
 
 			@Override
@@ -64,7 +69,6 @@ public class Piques2 extends GameEntity implements Actor {
 	@Override
 	public void draw(Canvas canvas) {
 		graphic.draw(canvas);
-		
 	}
 
 }

@@ -9,7 +9,7 @@ import java.awt.Color;
 import ch.epfl.cs107.play.game.actor.ActorGame;
 import ch.epfl.cs107.play.game.actor.ShapeGraphics;
 import ch.epfl.cs107.play.game.actor.bike.Wheel;
-import ch.epfl.cs107.play.game.actor.crate.Crate;
+import ch.epfl.cs107.play.game.actor.general.Crate;
 import ch.epfl.cs107.play.math.Polyline;
 import ch.epfl.cs107.play.math.RopeConstraintBuilder;
 import ch.epfl.cs107.play.math.Vector;

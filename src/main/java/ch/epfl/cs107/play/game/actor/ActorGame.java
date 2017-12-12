@@ -11,7 +11,7 @@ import com.sun.glass.events.KeyEvent;
 
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.actor.bike.Bike;
-import ch.epfl.cs107.play.game.actor.crate.Crate;
+import ch.epfl.cs107.play.game.actor.general.Crate;
 import ch.epfl.cs107.play.game.actor.general.Terrain;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.EntityBuilder;
@@ -194,12 +194,12 @@ public abstract class ActorGame implements Game {
 			}
 			// Si nous sommes en train de changer de couleur
 			if (choosingColor) {
-				ImageGraphics chooseColor = new ImageGraphics("ChooseColorBikeGame.png", 2.f, 1.33f, new Vector(0.752f, 0.5f), 1,
+				ImageGraphics chooseColor = new ImageGraphics("ChooseColorBikeGame.png", 1.875f, 1.25f, new Vector(0.752f, 0.5f), 1,
 						1000f); 
 				chooseColor.setParent(window);
 				chooseColor.draw(getCanvas());
 				// Differentes couleurs de cyliste disponible
-				if (getKeyboard().get(KeyEvent.VK_R).isReleased()) {
+				if (getKeyboard().get(KeyEvent.VK_X).isReleased()) {
 					((Bike) payLoad).createPlayer(Color.RED);
 					choosingColor = !choosingColor;
 				}
@@ -244,7 +244,7 @@ public abstract class ActorGame implements Game {
 			}
 			// Si nous appuyons sur C, cela cree une Crate a l'endroit du curseur de la souris
 			if (getKeyboard().get(KeyEvent.VK_C).isReleased() && !isDrawing && !choosingColor) {
-				Crate crate = new Crate(this, false, getMouse().getPosition(), 1, 1, "stone.broken.1.png");
+				new Crate(this, false, getMouse().getPosition(), 1, 1, "stone.broken.1.png");
 			}
 			// Si nous appuyons sur Z nous entrons en "edit-mod", pour dessiner un polyline
 			if (getKeyboard().get(KeyEvent.VK_Z).isReleased() && !choosingColor) {
@@ -264,7 +264,7 @@ public abstract class ActorGame implements Game {
 					// Nous ajoutons le 1er point en dernier pour finir le contour de la forme
 					points.add(points.get(0));
 					formeTerrain = new Polyline(points);
-					Terrain terrain = new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK,
+					new Terrain(this, true, Vector.ZERO, formeTerrain, Color.LIGHT_GRAY, Color.BLACK,
 							0.1f, null, false, 0.0f);
 				}
 			}
@@ -293,7 +293,7 @@ public abstract class ActorGame implements Game {
 	}
 
 	/**
-	 * les 4mMethodes suivantes sont la pour eviter de faire un 
+	 * les 4 Methodes suivantes sont la pour eviter de faire un 
 	 * getter du World entier
 	 * @return L'entityBuilder du world
 	 */

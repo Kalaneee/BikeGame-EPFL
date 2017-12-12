@@ -5,6 +5,7 @@
 package ch.epfl.cs107.play.game.actor.crate;
 
 import ch.epfl.cs107.play.game.actor.ActorGame;
+import ch.epfl.cs107.play.game.actor.general.Crate;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Window;
@@ -17,7 +18,6 @@ public class CrateGame extends ActorGame {
 	private Crate c1;
 	private Crate c2;
 	private Crate c3;
-	private float friction = 100.0f;
 	
 	public boolean begin(Window window, FileSystem fileSystem) {
 		super.begin(window, fileSystem);

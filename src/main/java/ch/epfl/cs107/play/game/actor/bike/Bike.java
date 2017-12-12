@@ -146,6 +146,10 @@ public class Bike extends GameEntity implements Actor {
 		roueGauche.getWheel().setPosition(new Vector(pos.getX() - 1, pos.getY()));
 	}
 	
+	/**
+	 * Methode pour creer un nouveau cycliste dans un couleur choisie
+	 * @param c : Une Color, la nouvelle couleur du cycliste
+	 */
 	public void createPlayer(Color c) {
 		colorPlayer = c;
 		player = new Player(c, getEntity(), bikeLook);
@@ -201,11 +205,12 @@ public class Bike extends GameEntity implements Actor {
 	protected void celebration() {
 		if (animBras <= 150) {
 			animBras++;
-			player.celebrate(animBras);
+			// Si nous regardons a droite, nous inversons l'animation
+			player.celebrate(aGauche ? animBras : -animBras);
 		}
 		if (animBras >= 150 && animBras2 > 0) {
 			animBras2--;
-			player.celebrate(animBras2);
+			player.celebrate(aGauche ? animBras2 : -animBras2);
 		}
 	}
 

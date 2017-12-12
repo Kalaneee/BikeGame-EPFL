@@ -10,11 +10,11 @@ import com.sun.glass.events.KeyEvent;
 
 import ch.epfl.cs107.play.game.actor.ActorGame;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
-import ch.epfl.cs107.play.game.actor.crate.Crate;
+import ch.epfl.cs107.play.game.actor.general.Crate;
+import ch.epfl.cs107.play.game.actor.general.Accelerateur;
+import ch.epfl.cs107.play.game.actor.general.Ascenseur;
 import ch.epfl.cs107.play.game.actor.general.Bascule;
 import ch.epfl.cs107.play.game.actor.general.Pendule;
-import ch.epfl.cs107.play.game.actor.general.Piques;
-import ch.epfl.cs107.play.game.actor.general.Piques2;
 import ch.epfl.cs107.play.game.actor.general.Terrain;
 import ch.epfl.cs107.play.game.actor.general.Tremplin;
 import ch.epfl.cs107.play.io.FileSystem;
@@ -64,10 +64,19 @@ public class BikeGame extends ActorGame {
 			261.0f, -25.0f,
 			268.0f, -25.0f,
 			268.0f, -20.0f,
-			280.0f, -20.0f,
-			280.0f, 0.0f,
-			300.0f, 0.0f,
-			300.0f, -1000.0f);
+			300.0f, -20.0f,
+			305.0f, -17.0f,
+			305.0f, -30.0f,
+			340.0f, -30.0f,
+			340.0f, -17.0f,
+			345.0f, -20.0f,
+			390.0f, -20.0f,
+			390.0f, 0.0f,
+			400.0f, 0.0f,
+			420.0f, 0.0f,
+			420.0f, 20.0f,
+			440.0f, 20.0f,
+			440.0f, -1000.0f);
 	// Nous mettons une friction nulle au terrain car le PartBuilder
 	// ne l'utilisera pas. Il applique une friction au terrain
 	// seulement si le terrain est glissant
@@ -140,12 +149,12 @@ public class BikeGame extends ActorGame {
 	private Bike bike;
 	// Nous mettons le rayon des roues en final car celui-ci ne change pas
 	private final float RAYON_ROUES = 0.5f;
-	private Vector posBike = new Vector(2.0f, 5.0f);
-	//private Vector posBike = new Vector(215.0f, -20.0f);
+	//private Vector posBike = new Vector(2.0f, 5.0f);
+	private Vector posBike = new Vector(210.0f, -20.0f);
 	
 	private Finish flag;
 	private float rayonFlag = 0.5f;
-	private Vector posFlag = new Vector(275.0f, -19.5f);
+	private Vector posFlag = new Vector(417.0f, 0.5f);
 	
 	private Pendule pendule1;
 	private Pendule pendule2;
@@ -164,8 +173,11 @@ public class BikeGame extends ActorGame {
 	private Tremplin tremplin1;
 	private Vector posTremplin1 = new Vector(163.0f, -21f);
 	
-	private Piques piques1;
-	private Vector posPiques1 = new Vector(220.0f, -20.0f);
+	private Ascenseur ascenseur1;
+	private Vector posAscenseur1 = new Vector(385.0f, -20.0f);
+	
+	private Accelerateur accelerateur1;
+	private Vector posAccelerateur1 = new Vector(295.0f, -20.0f);
 	
 	private TextGraphics msgDeath;
 	private int nbDeaths = 0;
@@ -197,20 +209,22 @@ public class BikeGame extends ActorGame {
 		pendule2 = new Pendule(this, true, posPendule2, 4.0f, 0.5f);
 		pendule3 = new Pendule(this, true, posPendule3, -5.0f, 0.5f);
 		
-		bascule1 = new Bascule(this, false, posBascule1, 3.5f, 0.5f, "wood.4.png", terrain);
-		bascule2 = new Bascule(this, false, posBascule2, 3.5f, 0.5f, "wood.4.png", terrain);
-		bascule3 = new Bascule(this, false, posBascule3, 6.5f, 0.7f, "wood.4.png", terrain);
+		bascule1 = new Bascule(this, false, posBascule1, 3.5f, 0.5f, "wood.cracked.3.png", terrain);
+		bascule2 = new Bascule(this, false, posBascule2, 3.5f, 0.5f, "wood.cracked.3.png", terrain);
+		bascule3 = new Bascule(this, false, posBascule3, 6.5f, 0.7f, "wood.cracked.3.png", terrain);
 		
-		plateforme1 = new Crate(this, true, posPlateforme1, 5, 0.7f, "wood.3.png");
-		plateforme2 = new Crate(this, true, posPlateforme2, 5, 1, "wood.3.png");
+		plateforme1 = new Crate(this, true, posPlateforme1, 5, 0.7f, "metal.3.png");
+		plateforme2 = new Crate(this, true, posPlateforme2, 5, 1, "metal.3.png");
 		
-		mur1 = new Crate(this, fixed, posMur1, 1.3f, 9.0f, "wood.3.png");
+		mur1 = new Crate(this, fixed, posMur1, 1.3f, 9.0f, "wood.cracked.8.png");
 		
 		bike = new Bike(this, fixed, posBike, polyBike, RAYON_ROUES);
 		
 		tremplin1 = new Tremplin(this, true, posTremplin1, 2.0f, 1.0f, "jumper.normal.png");
 		
-		//piques1 = new Piques(this, true, posPiques1, 3.0f, 1.0f, "spikes.png", bike);
+		ascenseur1 = new Ascenseur(this, true, posAscenseur1, 5.0f, 0.5f, "wood.3.png", 25.0f, 500.0f, 0.01f);
+		
+		accelerateur1 = new Accelerateur(this, true, posAccelerateur1, 3, 1, "Accelerateur.png");
 		
 		// Nous fixons la camera sur le bike
 		setViewCandidate(bike);
