@@ -57,10 +57,24 @@ public class Part {
         return fixtures.get(0).m_restitution;
     }
     
-    // TODO access to density, mass, area if needed
+    // TODO density, mass, area...?
     
-    // TODO collision filtering 
+    // TODO get shape?
     
+    /** @return collision categories of this part */
+    public int getCollisionSignature() {
+        return fixtures.get(0).m_filter.categoryBits;
+    }
+    
+    /** @return collision categories affected by this part */
+    public int getCollisionEffect() {
+        return fixtures.get(0).m_filter.maskBits;
+    }
+    
+    /** @return selected group index */
+    public int getCollisionGroup() {
+        return fixtures.get(0).m_filter.groupIndex;
+    }
     
     /** Destroys part. */
     public void destroy() {

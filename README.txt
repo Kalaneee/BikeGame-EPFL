@@ -48,6 +48,9 @@ ____________________________❄_CONSEILS_❄_____________________________
   >  Utilisez le frein pour rester plus facilement en équilibre
      sur l'ascenseur !    
      
+  >  Si tous ces conseils ne suffisent pas, regardez cette vidéo :
+     https://youtu.be/5LmIQc6MDUc  
+     
 ____________________________❄_IMAGES_❄_____________________________
 
   >  "ChooseColorBikeGame.png", celle-ci a été entièrement

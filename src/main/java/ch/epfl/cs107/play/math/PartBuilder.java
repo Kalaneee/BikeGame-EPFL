@@ -84,19 +84,48 @@ public class PartBuilder {
     }
     
     /**
-     * Selects which collision groups this part reacts to.
-     * @param bits bitfield, 0 to be affected by everybody
+     * Selects which collision categories this part reacts to.
+     * Usually, just one bit is set (by default, the first one, i.e. <code>0x1</code>).
+     * @param bits bitfield specifying which categories affect this part
      */
     public void setCollisionSignature(int bits) {
         fixtureDef.filter.categoryBits = bits;
     }
     
+    /** @return collision categories of this part */
+    public int getCollisionSignature() {
+        return fixtureDef.filter.categoryBits;
+    }
+    
     /**
-     * Selects shich collision groups this part affects.
-     * @param bits bitfield, 0 to affect everybody
+     * Selects which collision categories this part affects.
+     * By default, all groups are affected, i.e. <code>0xffff</code>.
+     * @param bits bitfield specifying which categories affect this part
      */
     public void setCollisionEffect(int bits) {
         fixtureDef.filter.maskBits = bits;
+    }
+    
+    /** @return collision categories affected by this part */
+    public int getCollisionEffect() {
+        return fixtureDef.filter.maskBits;
+    }
+    
+    /**
+     * Selects which collision group this part has.
+     * Parts in the same negative group never collide.
+     * Parts in the same positive group always collide.
+     * By default, the group 0 is used, which disables collision group for this part.
+     * Collision group always overrides collision categories.
+     * @param index group index
+     */
+    public void setCollisionGroup(int index) {
+        fixtureDef.filter.groupIndex = index;
+    }
+    
+    /** @return selected group index */
+    public int getCollisionGroup() {
+        return fixtureDef.filter.groupIndex;
     }
     
     /**

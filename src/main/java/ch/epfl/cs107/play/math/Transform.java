@@ -154,7 +154,7 @@ public final class Transform implements Serializable {
      */
     public Transform scaled(float sx, float sy) {
         return new Transform(
-            m00 * sx, m01 * sx, m02 * sy,
+            m00 * sx, m01 * sx, m02 * sx,
             m10 * sy, m11 * sy, m12 * sy
         );
     }
