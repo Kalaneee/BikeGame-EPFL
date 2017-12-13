@@ -165,7 +165,7 @@ public abstract class ActorGame implements Game {
 			window.setRelativeTransform(viewTransform);
 		} else {
 			// Nous sommes en Pause
-			ImageGraphics background = new ImageGraphics("metal.cracked.5.png", 0.4f, 0.15f, new Vector(4.9f, -2.5f), 1,
+			ImageGraphics background = new ImageGraphics("metal.cracked.5.png", 0.4f, 0.15f, new Vector(1.8f, -2.5f), 1,
 					90f);
 			background.setParent(window);
 			background.draw(window);
@@ -186,7 +186,9 @@ public abstract class ActorGame implements Game {
 			}
 			// Si nous sommes en train de changer de couleur
 			if (choosingColor) {
-				ImageGraphics chooseColor = new ImageGraphics("ChooseColorBikeGame.png", 1.875f, 1.25f, new Vector(0.752f, 0.5f), 1,
+//				ImageGraphics chooseColor = new ImageGraphics("ChooseColorBikeGame.png", 1.875f, 1.25f, new Vector(0.752f, 0.5f), 1,
+//						1000f); 
+				ImageGraphics chooseColor = new ImageGraphics("ChooseColorBikeGame.png", 1.875f, 1.25f, new Vector(0.5f, 0.5f), 1,
 						1000f); 
 				chooseColor.setParent(window);
 				chooseColor.draw(getCanvas());
