@@ -6,7 +6,7 @@
 _________________________❄_COMMENT_LANCER_LE_JEU_❄_________________________
 
 	Pour lancer le jeu, il suffit de télécharger le .jar à cette adresse : 
-	http://kalane.ch/docs/ et le lancer.
+	http://valentinkaelin.ch/docs/ et le lancer.
 	
 	Vous pouvez également lancer directement la classe
 	src/main/java/ch/epfl/cs107/play/Program.java en ayant la librairie jbox2d
